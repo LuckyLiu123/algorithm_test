@@ -19,5 +19,6 @@ const createList = (nums) => {
 
 
 export {
+    ListNode,
     createList
 }
