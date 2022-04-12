@@ -73,11 +73,26 @@ const mergeTwoLists2 = function(list1, list2){
     return prehead.next;
 }
 
-const l1 = createList([1,2,4]), l2 = createList([1,3,4]);
-console.log('mergeTwoLists:', mergeTwoLists2(l1, l2));
+// const l1 = createList([1,2,4]), l2 = createList([1,3,4]);
+// console.log('mergeTwoLists:', mergeTwoLists2(l1, l2));
 
+//3. 删除排序链表中的重复元素
+// 给定一个已排序的链表的头 head ， 删除所有重复的元素，使每个元素只出现一次 。返回 已排序的链表 。
+const deleteDuplicates = function(head){
+    if(!head) return head;
+    let cur = head;
+    while(cur.next){
+        if(cur.val === cur.next.val){
+            cur.next = cur.next.next;
+        }else{
+            cur = cur.next;
+        }
+    }
+    return head;
+}
 
-
+const head = createList([1,1,1,2,2,3,3,3]);
+console.log('deleteDuplicates:', deleteDuplicates(head));
 
 
 
