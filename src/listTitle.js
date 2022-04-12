@@ -91,12 +91,15 @@ const deleteDuplicates = function(head){
     return head;
 }
 
-const head = createList([1,1,1,2,2,3,3,3]);
-console.log('deleteDuplicates:', deleteDuplicates(head));
+// const head = createList([1,1,1,2,2,3,3,3]);
+// console.log('deleteDuplicates:', deleteDuplicates(head));
 
 
+//4. 删除排序链表中的重复元素 II(leetcode 44)
+// 给定一个已排序的链表的头 head ， 删除原始链表中所有重复数字的节点，只留下不同的数字 。返回 已排序的链表 。
+const deleteDuplicates2 = function(head){
 
-
+}
 
 
 
