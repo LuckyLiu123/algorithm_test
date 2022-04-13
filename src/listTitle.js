@@ -119,7 +119,7 @@ const deleteDuplicates2 = function(head){
 // console.log('deleteDuplicates2:', deleteDuplicates2(head));
 
 
-//5. 删除链表的倒数第 N 个结点
+//5. 删除链表的倒数第 N 个结点(leetcode 19)
 // 给你一个链表，删除链表的倒数第 n 个结点，并且返回链表的头结点。
 // 方法一：计算链表的长度
 const removeNthFromEnd1 = function(head, n){
@@ -152,8 +152,26 @@ const removeNthFromEnd2 = function(head, n){
     return dummy.next;
 }
 
+//方法三：双指针
+// 由于我们需要找到倒数第 n 个节点，因此我们可以使用两个指针 first 和 second 同时对链表进行遍历，
+// 并且 first 比 second 超前 n 个节点。当 first 遍历到链表的末尾时，second 就恰好处于倒数第 n 个节点。
+const removeNthFromEnd3 = function(head, n){
+    let dummy = new ListNode(0, head);
+    let first = head;
+    let second = dummy;
+    for(let i = 0; i < n; i++){
+        first = first.next;
+    }
+    while(first){
+        first = first.next;
+        second = second.next;
+    }
+    second.next = second.next.next;
+    return dummy.next;
+}
+
 const head = createList([1,2,3,4,5]);
-console.log('removeNthFromEnd:', removeNthFromEnd2(head, 2));
+console.log('removeNthFromEnd:', removeNthFromEnd3(head, 2));
 
 
 
