@@ -1,4 +1,4 @@
-import { ListNode, createList } from './untils.js';
+import { ListNode, createList, getListLength } from './untils.js';
 
 
 //1. 两两交换链表中的节点(leetcode 24)
@@ -115,12 +115,28 @@ const deleteDuplicates2 = function(head){
 }
 
 // const head = createList([1,2,3,3,4,4,5]);
-const head = createList([1,1,1,2,3]);
-console.log('deleteDuplicates2:', deleteDuplicates2(head));
+// const head = createList([1,1,1,2,3]);
+// console.log('deleteDuplicates2:', deleteDuplicates2(head));
+
+
+//5. 删除链表的倒数第 N 个结点
+// 给你一个链表，删除链表的倒数第 n 个结点，并且返回链表的头结点。
+// 方法一：计算链表的长度
+const removeNthFromEnd = function(head, n){
+    let dummy = new ListNode(0, head);
+    let len = getListLength(head);
+    let cur = dummy;
+    for(let i = 1; i < len - n + 1; i++){
+        cur = cur.next;
+    }
+    cur.next = cur.next.next;
+    return dummy.next;
+}
 
 
 
-
+const head = createList([1,2]);
+console.log('removeNthFromEnd:', removeNthFromEnd(head, 1));
 
 
 

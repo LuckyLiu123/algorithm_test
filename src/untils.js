@@ -15,10 +15,21 @@ const createList = (nums) => {
     return head.next;
 }
 
+//获取链表的长度
+const getListLength = (head) => {
+    let num = 0;
+    while(head){
+        num++;
+        head = head.next;
+    }
+    return num;
+}
+
 
 
 
 export {
     ListNode,
-    createList
+    createList,
+    getListLength
 }
