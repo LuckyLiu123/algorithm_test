@@ -122,7 +122,7 @@ const deleteDuplicates2 = function(head){
 //5. 删除链表的倒数第 N 个结点
 // 给你一个链表，删除链表的倒数第 n 个结点，并且返回链表的头结点。
 // 方法一：计算链表的长度
-const removeNthFromEnd = function(head, n){
+const removeNthFromEnd1 = function(head, n){
     let dummy = new ListNode(0, head);
     let len = getListLength(head);
     let cur = dummy;
@@ -133,10 +133,27 @@ const removeNthFromEnd = function(head, n){
     return dummy.next;
 }
 
+//方法二：栈 
+// 在遍历链表的同时将所有节点依次入栈。根据栈「先进后出」的原则，我们弹出栈的第 n 个节点就是需要删除的节点，
+// 并且目前栈顶的节点就是待删除节点的前驱节点。
+const removeNthFromEnd2 = function(head, n){
+    let dummy = new ListNode(0, head);
+    let stack = [];
+    let cur = dummy;
+    while(cur){
+        stack.push(cur);
+        cur = cur.next;
+    }
+    for(let i = 0; i < n; i++){
+        stack.pop();
+    }
+    let prev = stack[stack.length - 1];
+    prev.next = prev.next.next;
+    return dummy.next;
+}
 
-
-const head = createList([1,2]);
-console.log('removeNthFromEnd:', removeNthFromEnd(head, 1));
+const head = createList([1,2,3,4,5]);
+console.log('removeNthFromEnd:', removeNthFromEnd2(head, 2));
 
 
 
