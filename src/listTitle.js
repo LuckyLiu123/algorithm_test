@@ -1,4 +1,4 @@
-import { ListNode, createList, getListLength } from './untils.js';
+import { ListNode, createList, getListLength, reverseLinkedList } from './untils.js';
 
 
 //1. 两两交换链表中的节点(leetcode 24)
@@ -170,11 +170,65 @@ const removeNthFromEnd3 = function(head, n){
     return dummy.next;
 }
 
+// const head = createList([1,2,3,4,5]);
+// console.log('removeNthFromEnd:', removeNthFromEnd3(head, 2));
+
+//6. 反转链表 II(leetcode 92)
+// 给你单链表的头指针 head 和两个整数 left 和 right ，其中 left <= right 。请你反转从位置 left 到位置 right 的链表节点，返回 反转后的链表
+// 方法一: 穿针引线
+const reverseBetween1 = function(head, left, right){
+    let dummy = new ListNode(0, head);
+
+    let prev = dummy;
+    // 第 1 步：从虚拟头节点走 left - 1 步，来到 left 节点的前一个节点
+    for(let i = 0; i < left - 1; i++){
+        prev = prev.next;
+    }
+
+    let rightNode = prev;
+    // 第 2 步：从 pre 再走 right - left + 1 步，来到 right 节点
+    for(let i = 0; i < right - left + 1; i++){
+        rightNode = rightNode.next;
+    }
+
+    //截取链表
+    let leftNode = prev.next;
+    let curr = rightNode.next;
+
+    //切断链接
+    prev.next = null;
+    rightNode.next = null;
+
+    //反转链表
+    reverseLinkedList(leftNode);
+
+    //接回到原来的链表中
+    prev.next = rightNode;
+    leftNode.next = curr;
+    return dummy.next;
+}
+
+//方法二：一次遍历「穿针引线」反转链表（头插法）
+const reverseBetween2 = function(head, left, right){
+    let dummy = new ListNode(0, head);
+
+    let prev = dummy;
+    for(let i = 0; i < left - 1; i++){
+        prev = prev.next;
+    }
+
+    let cur = prev.next;
+    for(let i = 0; i < right - left; i++){
+        const next = cur.next;
+        cur.next = next.next;
+        next.next = prev.next;
+        prev.next = next;
+    }
+    return dummy.next;
+}
+
 const head = createList([1,2,3,4,5]);
-console.log('removeNthFromEnd:', removeNthFromEnd3(head, 2));
-
-
-
+console.log('reverseBetween:', reverseBetween2(head, 2, 4));
 
 
 
