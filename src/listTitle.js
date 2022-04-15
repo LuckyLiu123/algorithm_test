@@ -227,14 +227,44 @@ const reverseBetween2 = function(head, left, right){
     return dummy.next;
 }
 
-const head = createList([1,2,3,4,5]);
-console.log('reverseBetween:', reverseBetween2(head, 2, 4));
+// const head = createList([1,2,3,4,5]);
+// console.log('reverseBetween:', reverseBetween2(head, 2, 4));
 
 
+//7. 旋转链表(leetcode 61)
+// 给你一个链表的头节点 head ，旋转链表，将链表每个节点向右移动 k 个位置。
+// 思路：可以先将给定的链表连接成环，然后将指定位置断开
+const rotateRight = function(head, k){
+    if(k === 0 || !head || !head.next){
+        return head;
+    }
+    let n = 1;
+    let cur = head;
+    while(cur.next){
+        cur = cur.next;
+        n++;
+    }
 
+    let add = n - k % n;
+    if(add === n){
+        return head;
+    }
 
+    cur.next = head;
+    while(add){
+        cur = cur.next;
+        add--;
+    }
 
+    const ret = cur.next;
+    cur.next = null;
+    return ret;
+}
 
+// const head = createList([1,2,3,4,5]), k = 2;
+const head = createList([0,1,2]), k = 4;
+// const head = createList([]), k = 1;
+console.log('rotateRight:', rotateRight(head, k));
 
 
 
