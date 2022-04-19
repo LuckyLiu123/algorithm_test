@@ -81,14 +81,61 @@ const maxArea = function(height) {
     return ans;
 }
 
-const height = [1,9,6,2,5,4,8,9,7];
+// const height = [1,9,6,2,5,4,8,9,7];
 // const height = [1,1];
-console.log('maxArea:', maxArea(height));
+// console.log('maxArea:', maxArea(height));
 
 
+//3. 下一个排列(leecode 31)
+/**
+ * 整数数组的一个 排列  就是将其所有成员以序列或线性顺序排列。
+ * - 例如，arr = [1,2,3] ，以下这些都可以视作 arr 的排列：[1,2,3]、[1,3,2]、[3,1,2]、[2,3,1] 。
+ * 整数数组的 下一个排列 是指其整数的下一个字典序更大的排列。更正式地，如果数组的所有排列根据其字典顺序从小到大排列在一个容器中，
+ * 那么数组的 下一个排列 就是在这个有序容器中排在它后面的那个排列。如果不存在下一个更大的排列，
+ * 那么这个数组必须重排为字典序最小的排列（即，其元素按升序排列）。
+ * 给你一个整数数组 nums ，找出 nums 的下一个排列。必须 原地 修改，只允许使用额外常数空间。
+*/
+/**
+ * 思路：
+ * a. 首先从后向前查找第一个顺序对 (i,i+1)，满足 a[i] < a[i+1]。这样「较小数」即为 a[i]。此时 [i+1,n) 必然是下降序列。
+ * b. 如果找到了顺序对，那么在区间 [i+1,n) 中从后向前查找第一个元素 j 满足 a[i] < a[j]。这样「较大数」即为 a[j]。
+ * c. 交换 a[i] 与 a[j]，此时可以证明区间 [i+1,n) 必为降序。我们可以直接使用双指针反转区间 [i+1,n) 使其变为升序，而无需对该区间进行排序。
+*/
+const nextPermutation = function(nums){
+    let i = nums.length - 2;
+    while(i >= 0 && nums[i] >= nums[i + 1]){
+        i--;
+    }
+    if(i >= 0){
+        let j = nums.length - 1;
+        while(j >= 0 && nums[i] >= nums[j]){
+            j--;
+        }
+        swap(nums, i, j);
+    }
+    reverse(nums, i + 1);
+    return nums;
+}
 
+function swap(nums, i, j){
+    let temp = nums[i];
+    nums[i] = nums[j];
+    nums[j] = temp;
+}
 
+function reverse(nums, start){
+    let left = start, right = nums.length - 1;
+    while(left < right){
+        swap(nums, left, right);
+        left++;
+        right--;
+    }
+}
 
+// const nums = [1,2,3];
+// const nums = [3,2,1];
+const nums = [1,1,5];
+console.log('nextPermutation:', nextPermutation(nums));
 
 
 
