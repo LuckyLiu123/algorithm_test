@@ -172,18 +172,43 @@ const merge = (intervals) => {
     return merged;
 }
 
-const intervals = [[1,3],[2,6],[8,10],[15,18]];
+// const intervals = [[1,3],[2,6],[8,10],[15,18]];
 // const intervals = [[1,4],[4,5]];
 // const intervals = [[1,3]];
 // const intervals = [[1,4],[5,6]];
-console.log('merge:', merge(intervals));
+// console.log('merge:', merge(intervals));
 
+//5. 插入区间(leetcode 57)
+// 给你一个 无重叠的 ，按照区间起始端点排序的区间列表。
+// 在列表中插入一个新的区间，你需要确保列表中的区间仍然有序且不重叠（如果有必要的话，可以合并区间）。
+/** 
+ * 示例:
+ * 输入：intervals = [[1,3],[6,9]], newInterval = [2,5]
+ * 输出：[[1,5],[6,9]]
+*/
+const insert = (intervals, newInterval) => {
+    if(intervals.length === 0) return [newInterval];
+    intervals.push(newInterval);
+    intervals.sort((a, b) => a[0] - b[0]);
 
+    const merged = [];
+    for(let i = 0; i < intervals.length; i++){
+        let L = intervals[i][0], R = intervals[i][1];
+        if(merged.length === 0 || merged[merged.length - 1][1] < L){
+            merged.push([L,R]);
+        }else{
+            merged[merged.length - 1][1] = Math.max(merged[merged.length - 1][1], R);
+        }
+    }
+    return merged;
+}
 
-
-
-
-
+// const intervals = [[1,3],[6,9]], newInterval = [2,5];
+// const intervals = [[1,2],[3,5],[6,7],[8,10],[12,16]], newInterval = [4,8];
+// const intervals = [[1,5]], newInterval = [2,3];
+// const intervals = [], newInterval = [5,7];
+const intervals = [[1,5]], newInterval = [2,7];
+console.log('insert:', insert(intervals, newInterval));
 
 
 
