@@ -263,12 +263,29 @@ const longestConsecutive = function(nums){
 // const nums = [0,3,7,2,5,8,4,6,0,1];
 // console.log('longestConsecutive:', longestConsecutive(nums));
 
+//8. 加一(leetcode 66)
+// 给定一个由 整数 组成的 非空 数组所表示的非负整数，在该数的基础上加一。
+// 最高位数字存放在数组的首位， 数组中每个元素只存储单个数字。
+// 你可以假设除了整数 0 之外，这个整数不会以零开头。
+const plusOne = (digits) => {
+    const n = digits.length;
+    for(let i = n - 1; i >= 0; i--){
+        if(digits[i] == 9){
+            digits[i] = 0;
+        }else{
+            digits[i] += 1;
+            return digits;
+        }
+    }
+    const ans = new Array(n + 1).fill(0);
+    ans[0] = 1;
+    return ans;
+}
 
-
-
-
-
-
+// const digits = [1,2,3];
+// const digits = [4,3,2,1];
+const digits = [9,9];
+console.log('plusOne:', plusOne(digits));
 
 
 
