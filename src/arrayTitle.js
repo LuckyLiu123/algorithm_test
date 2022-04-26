@@ -289,13 +289,48 @@ const plusOne = (digits) => {
 
 // const digits = [1,2,3];
 // const digits = [4,3,2,1];
-const digits = [9,9];
-console.log('plusOne:', plusOne(digits));
+// const digits = [9,9];
+// console.log('plusOne:', plusOne(digits));
 
 
+//9. 组合总和(leetcode 39)
+/**
+ * 给你一个 无重复元素 的整数数组 candidates 和一个目标整数 target ，找出 candidates 中可以使数字和为目标数 target 的 所有 不同组合 ，并以列表形式返回。你可以按 任意顺序 返回这些组合。
+ * candidates 中的 同一个 数字可以 无限制重复被选取 。如果至少一个数字的被选数量不同，则两种组合是不同的。 
+*/
+/**
+ * 思路: 对于这类寻找所有可行解的题，我们都可以尝试用「搜索回溯」的方法来解决。
+ * 我们定义递归函数 dfs(target,combine,idx) 表示当前在 candidates 数组的第 idx 位，还剩 target 要组合，已经组合的列表为 combine。
+ * 递归的终止条件为 target≤0 或者 candidates 数组被全部用完。那么在当前的函数中，每次我们可以选择跳过不用第 idx 个数，
+ * 即执行 dfs(target,combine,idx+1)。也可以选择使用第 idx 个数，即执行 dfs(target−candidates[idx],combine,idx)，
+ * 注意到每个数字可以被无限制重复选取，因此搜索的下标仍为 idx。
+*/
+const combinationSum = function(candidates, target){
+    const ans = [];
+    const dfs = (target, combine, idx) => {
+        if(idx === candidates.length){
+            return;
+        }
+        if(target === 0){
+            ans.push(combine);
+            return;
+        }
+        //直接跳过
+        dfs(target, combine, idx + 1);
+        //选择当前数
+        if(target - candidates[idx] >= 0){
+            dfs(target - candidates[idx], [...combine, candidates[idx]], idx);
+        }
+    }
 
+    dfs(target, [], 0);
+    return ans;
+}
 
-
+// const candidates = [2,3,6,7], target = 7;
+// const candidates = [2,3,5], target = 8;
+const candidates = [2], target = 1;
+console.log('combinationSum:', combinationSum(candidates, target));
 
 
 
