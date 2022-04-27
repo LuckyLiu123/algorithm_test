@@ -329,15 +329,60 @@ const combinationSum = function(candidates, target){
 
 // const candidates = [2,3,6,7], target = 7;
 // const candidates = [2,3,5], target = 8;
-const candidates = [2], target = 1;
-console.log('combinationSum:', combinationSum(candidates, target));
+// const candidates = [2], target = 1;
+// console.log('combinationSum:', combinationSum(candidates, target));
 
+//10. 颜色分类(leetcode 75)
+/**
+ * 给定一个包含红色、白色和蓝色、共 n 个元素的数组 nums ，原地对它们进行排序，使得相同颜色的元素相邻，并按照红色、白色、蓝色顺序排列。
+ * 我们使用整数 0、 1 和 2 分别表示红色、白色和蓝色。必须在不使用库的sort函数的情况下解决这个问题。
+*/
+//方法一：转换成对象
+const sortColors1 = function(nums){
+    const map = {};
+    for(let i = 0; i < nums.length; i++){
+        if(!map[nums[i]]){
+            map[nums[i]] = 1;
+        }else{
+            map[nums[i]] += 1;
+        }
+    }
+    const ans = [];
+    for(let i = 0; i <= 2; i++){
+        let num = 1;
+        while(num <= map[i]){
+            ans.push(i);
+            num++;
+        }
+    }
+    return ans;
+}
 
+//方法二：双指针
+const sortColors2 = function(nums){
+    let len = nums.length;
+    let p0 = 0, p2 = len - 1;
+    for(let i = 0; i <= p2; i++){
+        while(i <= p2 && nums[i] == 2){
+            let temp = nums[i];
+            nums[i] = nums[p2];
+            nums[p2] = temp;
+            --p2;
+        }
+        if(nums[i] == 0){
+            let temp = nums[i];
+            nums[i] = nums[p0];
+            nums[p0] = temp;
+            ++p0;
+        }
+    }
+}
 
-
-
-
-
+// const nums = [2,0,2,1,1,0];
+const nums = [2,0,1];
+// console.log('sortColors:', sortColors2(nums));
+sortColors2(nums);
+console.log('nums:', nums);
 
 
 
