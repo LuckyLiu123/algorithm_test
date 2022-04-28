@@ -379,14 +379,51 @@ const sortColors2 = function(nums){
 }
 
 // const nums = [2,0,2,1,1,0];
-const nums = [2,0,1];
+// const nums = [2,0,1];
 // console.log('sortColors:', sortColors2(nums));
-sortColors2(nums);
-console.log('nums:', nums);
+// sortColors2(nums);
+// console.log('nums:', nums);
 
 
+//11. 跳跃游戏 II(leetcode 45)
+/**
+ * 给你一个非负整数数组 nums ，你最初位于数组的第一个位置。数组中的每个元素代表你在该位置可以跳跃的最大长度。
+ * 你的目标是使用最少的跳跃次数到达数组的最后一个位置。假设你总是可以到达数组的最后一个位置。
+*/
+//方法一：反向查找出发位置
+const jump1 = (nums) => {
+    let position = nums.length - 1;
+    let steps = 0;
+    while(position > 0){
+        for(let i = 0; i < position; i++){
+            if(i + nums[i] >= position){
+                position = i;
+                steps++;
+                break;
+            }
+        }
+    }
+    return steps;
+}
 
+// 方法二：正向查找可到达的最大位置
+const jump2 = (nums) => {
+    let len = nums.length;
+    let end = 0;
+    let maxPosition = 0;
+    let steps = 0;
+    for(let i = 0; i < len - 1; i++){
+        maxPosition = Math.max(maxPosition, i + nums[i]);
+        if(i === end){
+            end = maxPosition;
+            steps++;
+        }
+    }
+    return steps;
+}
 
+const nums = [2,3,1,1,4];
+console.log('jump:', jump1(nums));
 
 
 
