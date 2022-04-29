@@ -454,13 +454,33 @@ const singleNumber = (nums) => {
     return single;
 }
 // const nums = [2,2,1];
-const nums = [4,1,2,1,2];
-console.log('singleNumber:', singleNumber(nums));
+// const nums = [4,1,2,1,2];
+// console.log('singleNumber:', singleNumber(nums));
 
 
+//13. 多数元素(leetcode 169)
+// 给定一个大小为 n 的数组 nums ，返回其中的多数元素。多数元素是指在数组中出现次数 大于 ⌊ n/2 ⌋ 的元素。
+// 你可以假设数组是非空的，并且给定的数组总是存在多数元素。
+const majorityElement = (nums) => {
+    let len = nums.length;
+    let map = {};
+    for(let num of nums){
+        if(!map[num]){
+            map[num] = 1;
+        }else{
+            map[num] += 1;
+        }
+    }
 
-
-
+    for(let key in map){
+        if(map[key] > len / 2){
+            return Number(key);
+        }
+    }
+}
+// const nums = [3,2,3];
+const nums = [2,2,1,1,1,2,2];
+console.log('majorityElement:', majorityElement(nums));
 
 
 
