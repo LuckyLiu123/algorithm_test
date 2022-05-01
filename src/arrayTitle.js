@@ -508,10 +508,129 @@ const maxProfit = (prices) => {
     }
     return maxPrice;
 }
-const prices = [7,1,5,3,6,4];
+// const prices = [7,1,5,3,6,4];
 // const prices = [7,6,4,3,1];
 // const prices = [2,4,1];
-console.log('maxProfit:', maxProfit(prices));
+// console.log('maxProfit:', maxProfit(prices));
+
+
+//15. 杨辉三角(leetcode 118)
+// 给定一个非负整数 numRows，生成「杨辉三角」的前 numRows 行。在「杨辉三角」中，每个数是它左上方和右上方的数的和。
+const generate = (numRows) => {
+    const ret = [];
+    for(let i = 0; i < numRows; i++){
+        const row = new Array(i + 1).fill(1);
+        for(let j = 1; j < row.length - 1; j++){
+            row[j] = ret[i - 1][j - 1] + ret[i - 1][j];
+        }
+        ret.push(row);
+    }
+    return ret;
+}
+console.log('generate:', generate(1));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
