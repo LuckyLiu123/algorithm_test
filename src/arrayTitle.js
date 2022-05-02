@@ -527,11 +527,23 @@ const generate = (numRows) => {
     }
     return ret;
 }
-console.log('generate:', generate(1));
+// console.log('generate:', generate(1));
 
 
-
-
+//16. 杨辉三角 II(leetcode 119)
+// 给定一个非负索引 rowIndex，返回「杨辉三角」的第 rowIndex 行。在「杨辉三角」中，每个数是它左上方和右上方的数的和。
+const getRow = (rowIndex) => {
+    const ret = [];
+    for(let i = 0; i <= rowIndex; i++){
+        const row = new Array(i + 1).fill(1);
+        for(let j = 1; j < row.length - 1; j++){
+            row[j] = ret[i - 1][j - 1] + ret[i - 1][j];
+        }
+        ret.push(row);
+    }
+    return ret[rowIndex];
+}
+console.log('getRow:', getRow(0));
 
 
 
