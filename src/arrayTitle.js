@@ -573,15 +573,35 @@ const maxProfit3 = (prices) => {
     return dp0;
 }
 
-const prices = [7,1,5,3,6,4];
+// const prices = [7,1,5,3,6,4];
 // const prices = [1,2,3,4,5];
 // const prices = [7,6,4,3,1];
-console.log('maxProfit2:', maxProfit3(prices));
+// console.log('maxProfit2:', maxProfit3(prices));
 
 
+//18. 子集(leetcode 78)
+// 给你一个整数数组 nums ，数组中的元素 互不相同 。返回该数组所有可能的子集（幂集）。解集 不能 包含重复的子集。你可以按 任意顺序 返回解集。
+const subsets = (nums) => {
+    const t = [];
+    const ans = [];
+    const n = nums.length;
+    const dfs = (cur) => {
+        if(cur === nums.length){
+            ans.push(t.slice());
+            return;
+        }
+        t.push(nums[cur]);
+        dfs(cur + 1, nums);
+        t.pop(t.length - 1);
+        dfs(cur + 1, nums);
+    }
+    dfs(0, nums);
+    return ans;
+}
 
-
-
+// const nums = [1, 2, 3];
+const nums = [0];
+console.log('subsets:', subsets(nums));
 
 
 
