@@ -651,14 +651,30 @@ const solve = (board) => {
 }
 
 // const board = [["X","X","X","X"],["X","O","O","X"],["X","X","O","X"],["X","O","X","X"]];
-const board = [["X"]];
-console.log('solve:', solve(board));
+// const board = [["X"]];
+// console.log('solve:', solve(board));
 
 
-
-
-
-
+//20. 只出现一次的数字 II(leetcode 137)
+// 给你一个整数数组 nums ，除某个元素仅出现 一次 外，其余每个元素都恰出现 三次 。请你找出并返回那个只出现了一次的元素。
+const singleNumber1 = (nums) => {
+    const freq = new Map();
+    for(const num of nums){
+        freq.set(num, (freq.get(num) || 0) + 1);
+    }
+    let ans = 0;
+    console.log('freq.entries():', freq.entries());
+    for(const [num, occ] of freq.entries()){
+        if(occ === 1){
+            ans = num;
+            break;
+        }
+    }
+    return ans;
+}
+const nums = [2,2,3,2];
+// const nums = [0,1,0,1,0,1,99];
+console.log('singleNumber1:', singleNumber1(nums));
 
 
 
