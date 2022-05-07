@@ -672,14 +672,27 @@ const singleNumber1 = (nums) => {
     }
     return ans;
 }
-const nums = [2,2,3,2];
+// const nums = [2,2,3,2];
 // const nums = [0,1,0,1,0,1,99];
-console.log('singleNumber1:', singleNumber1(nums));
+// console.log('singleNumber1:', singleNumber1(nums));
 
 
-
-
-
+//21.存在重复元素(leetcode 217)
+// 给你一个整数数组 nums 。如果任一值在数组中出现 至少两次 ，返回 true ；如果数组中每个元素互不相同，返回 false 。
+const containsDuplicate = (nums) => {
+    const set = new Set();
+    for(const num of nums){
+        if(set.has(num)){
+            return true;
+        }
+        set.add(num);
+    }
+    return false;
+}
+// const nums = [1,2,3,1];
+// const nums = [1,2,3,4];
+const nums = [1,1,1,3,3,4,3,2,4,2];
+console.log('containsDuplicate:', containsDuplicate(nums));
 
 
 
