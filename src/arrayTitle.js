@@ -691,12 +691,46 @@ const containsDuplicate = (nums) => {
 }
 // const nums = [1,2,3,1];
 // const nums = [1,2,3,4];
-const nums = [1,1,1,3,3,4,3,2,4,2];
-console.log('containsDuplicate:', containsDuplicate(nums));
+// const nums = [1,1,1,3,3,4,3,2,4,2];
+// console.log('containsDuplicate:', containsDuplicate(nums));
 
 
+//22. 丢失的数字(leetcode 268)
+// 给定一个包含 [0, n] 中 n 个数的数组 nums ，找出 [0, n] 这个范围内没有出现在数组中的那个数。
+/**
+ * 示例：
+ * 输入：nums = [3,0,1]
+ * 输出：2
+ * 解释：n = 3，因为有 3 个数字，所以所有的数字都在范围 [0,3] 内。2 是丢失的数字，因为它没有出现在 nums 中。
+*/
+//方法一：求和
+const missingNumber1 = (nums) => {
+    const n = nums.length;
+    let sum = 0;
+    for(let i = 0; i <= n; i++){
+        sum += i;
+    }
+    const amount = nums.reduce((occ, num) => occ + num, 0);
+    return sum - amount;
+}
 
+//方法二：排序
+const missingNumber2 = (nums) => {
+    nums.sort((a, b) => a - b);
+    let n = nums.length;
+    for(let i = 0; i <= n; i++){
+        if(nums[i] !== i){
+            return i;
+        }
+    }
+    return n;
+}
 
+const nums = [3,0,1];
+// const nums = [0,1];
+// const nums = [9,6 ,4,2,3,5,7,0,1];
+// const nums = [0];
+console.log('missingNumber:', missingNumber2(nums));
 
 
 
