@@ -733,7 +733,50 @@ const missingNumber2 = (nums) => {
 // console.log('missingNumber:', missingNumber2(nums));
 
 
-//23. 最接近的三数之和(leetcode)
+//23. 三数之和(leetcode 15)
+// 给你一个包含 n 个整数的数组 nums，判断 nums 中是否存在三个元素 a，b，c ，使得 a + b + c = 0 ？请你找出所有和为 0 且不重复的三元组。
+// 注意：答案中不可以包含重复的三元组。
+//方法一：排序加双指针
+const threeSum = (nums) => {
+    nums.sort((a, b) => a - b);
+    const n = nums.length;
+    const ans = [];
+    for(let first = 0; first < n; first++){
+        // 需要和上一次枚举的数不相同
+        if(first > 0 && nums[first] === nums[first - 1]){
+            continue;
+        }
+        // c 对应的指针初始指向数组的最右端
+        let third = n - 1;
+        const target = -nums[first];
+        for(let second = first + 1; second < n; second++){
+            // 需要和上一次枚举的数不相同
+            if(second > first + 1 && nums[second] === nums[second - 1]){
+                continue;
+            }
+            // 需要保证 b 的指针在 c 的指针的左侧
+            while(second < third && nums[second] + nums[third] > target){
+                --third;
+            }
+            // 如果指针重合，随着 b 后续的增加
+            // 就不会有满足 a+b+c=0 并且 b<c 的 c 了，可以退出循环
+            if(second === third){
+                break;
+            }
+            if(nums[second] + nums[third] === target){
+                ans.push([nums[first], nums[second], nums[third]]);
+            }
+        }
+    }
+    return ans;
+}
+// const nums = [-1,0,1,2,-1,-4];
+const nums = [0];
+console.log('threeSum:', threeSum(nums));
+
+
+
+//24. 最接近的三数之和(leetcode 16)
 // 给你一个长度为 n 的整数数组 nums 和 一个目标值 target。请你从 nums 中选出三个整数，使它们的和与 target 最接近。
 // 返回这三个数的和。假定每组输入只存在恰好一个解。
 const threeSumClosest = (nums, target) => {
@@ -780,8 +823,8 @@ const threeSumClosest = (nums, target) => {
 }
 
 // const nums = [-1,2,1,-4], target = 1;
-const nums = [0,0,0], target = 1;
-console.log('threeSumClosest:', threeSumClosest(nums, target));
+// const nums = [0,0,0], target = 1;
+// console.log('threeSumClosest:', threeSumClosest(nums, target));
 
 
 
