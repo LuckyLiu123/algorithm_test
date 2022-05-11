@@ -748,11 +748,11 @@ const twoSum = (nums, target) => {
 }
 // const nums = [2,7,11,15], target = 9;
 // const nums = [3,2,4], target = 6;
-const nums = [3,3], target = 6;
-console.log('twoSum:', twoSum(nums, target));
+// const nums = [3,3], target = 6;
+// console.log('twoSum:', twoSum(nums, target));
 
 
-//23. 三数之和(leetcode 15)
+//24. 三数之和(leetcode 15)
 // 给你一个包含 n 个整数的数组 nums，判断 nums 中是否存在三个元素 a，b，c ，使得 a + b + c = 0 ？请你找出所有和为 0 且不重复的三元组。
 // 注意：答案中不可以包含重复的三元组。
 //方法一：排序加双指针
@@ -795,7 +795,7 @@ const threeSum = (nums) => {
 
 
 
-//24. 最接近的三数之和(leetcode 16)
+//25. 最接近的三数之和(leetcode 16)
 // 给你一个长度为 n 的整数数组 nums 和 一个目标值 target。请你从 nums 中选出三个整数，使它们的和与 target 最接近。
 // 返回这三个数的和。假定每组输入只存在恰好一个解。
 const threeSumClosest = (nums, target) => {
@@ -846,6 +846,54 @@ const threeSumClosest = (nums, target) => {
 // console.log('threeSumClosest:', threeSumClosest(nums, target));
 
 
+//26. 有效的数独(leetcode 36)
+/**
+ * 请你判断一个 9 x 9 的数独是否有效。只需要 根据以下规则 ，验证已经填入的数字是否有效即可。
+ * 数字 1-9 在每一行只能出现一次。
+ * 数字 1-9 在每一列只能出现一次。
+ * 数字 1-9 在每一个以粗实线分隔的 3x3 宫内只能出现一次。（请参考示例图）
+*/
+const isValidSudoku = (board) => {
+    const rows = new Array(9).fill(0).map(() => new Array(9).fill(0));
+    const columns = new Array(9).fill(0).map(() => new Array(9).fill(0));
+    const subboxs = new Array(9).fill(0).map(() => new Array(9).fill(0).map(() => new Array(9).fill(0)));
+    for(let i = 0; i < 9; i++){
+        for(let j = 0; j < 9; j++){
+            const c = board[i][j];
+            if(c !== '.'){
+                const index = c.charCodeAt() - '0'.charCodeAt() - 1;
+                rows[i][index]++;
+                columns[j][index]++;
+                subboxs[Math.floor(i / 3)][Math.floor(j / 3)][index]++;
+                if(rows[i][index] > 1 || columns[j][index] > 1 || subboxs[Math.floor(i / 3)][Math.floor(j / 3)][index] > 1){
+                    return false;
+                }
+            }
+        }
+    }
+    return true;
+}
+// const board = 
+// [["5","3",".",".","7",".",".",".","."]
+// ,["6",".",".","1","9","5",".",".","."]
+// ,[".","9","8",".",".",".",".","6","."]
+// ,["8",".",".",".","6",".",".",".","3"]
+// ,["4",".",".","8",".","3",".",".","1"]
+// ,["7",".",".",".","2",".",".",".","6"]
+// ,[".","6",".",".",".",".","2","8","."]
+// ,[".",".",".","4","1","9",".",".","5"]
+// ,[".",".",".",".","8",".",".","7","9"]];
+const board = 
+[["8","3",".",".","7",".",".",".","."]
+,["6",".",".","1","9","5",".",".","."]
+,[".","9","8",".",".",".",".","6","."]
+,["8",".",".",".","6",".",".",".","3"]
+,["4",".",".","8",".","3",".",".","1"]
+,["7",".",".",".","2",".",".",".","6"]
+,[".","6",".",".",".",".","2","8","."]
+,[".",".",".","4","1","9",".",".","5"]
+,[".",".",".",".","8",".",".","7","9"]];
+console.log('isValidSudoku:', isValidSudoku(board));
 
 
 
