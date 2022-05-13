@@ -931,18 +931,69 @@ const minPathSum = (grid) => {
 }
 
 // const grid = [[1,3,1],[1,5,1],[4,2,1]];
-const grid = [[1,2,3],[4,5,6]];
-console.log('minPathSum:', minPathSum(grid));
+// const grid = [[1,2,3],[4,5,6]];
+// console.log('minPathSum:', minPathSum(grid));
 
 
+// 28. 跳跃游戏(leetcode 55)
+// 给定一个非负整数数组 nums ，你最初位于数组的 第一个下标 。数组中的每个元素代表你在该位置可以跳跃的最大长度。
+// 判断你是否能够到达最后一个下标。
+// 方法一：贪心
+/**
+ * - 只要存在一个位置 x，它本身可以到达，并且它跳跃的最大长度为 x + nums[x]，这个值大于等于 y，即 x + nums[x] ≥ y，那么位置 y 也可以到达。
+ * - 我们依次遍历数组中的每一个位置，并实时维护 最远可以到达的位置。对于当前遍历到的位置 xx，如果它在 最远可以到达的位置 的范围内，
+ *   那么我们就可以从起点通过若干次跳跃到达该位置，因此我们可以用 x + nums[x] 更新 最远可以到达的位置。
+*/
+const canJump = (nums) => {
+    const n = nums.length;
+    let rightMost = 0;
+    for(let i = 0; i < n; i++){
+        if(i <= rightMost){
+            rightMost = Math.max(rightMost, i + nums[i]);
+            if(rightMost >= n - 1){
+                return true;
+            }
+        }
+    }
+    return false;
+}
+// const nums = [2,3,1,1,4];
+// const nums = [3,2,1,0,4];
+// console.log('canJump:', canJump(nums));
 
 
+//29. 移动零(leetcode 283)
+// 给定一个数组 nums，编写一个函数将所有 0 移动到数组的末尾，同时保持非零元素的相对顺序。请注意 ，必须在不复制数组的情况下原地对数组进行操作。
+// 方法一：双指针
+/**
+ * 使用双指针，左指针指向当前已经处理好的序列的尾部，右指针指向待处理序列的头部。
+ * 右指针不断向右移动，每次右指针指向非零数，则将左右指针对应的数交换，同时左指针右移
+ * 注意到以下性质：
+ * - 左指针左边均为非零数；
+ * - 右指针左边直到左指针处均为零
+*/
+const moveZeroes = (nums) => {
+    const n = nums.length;
+    let left = 0, right = 0;
+    while(right < n){
+        if(nums[right] !== 0){
+            swap1(nums, left, right);
+            left++;
+        }
+        right++;
+    }
+}
 
+function swap1(nums, left, right){
+    const temp = nums[left];
+    nums[left] = nums[right];
+    nums[right] = temp;
+}
 
-
-
-
-
+// const nums = [0,1,0,3,12];
+const nums = [0];
+moveZeroes(nums);
+console.log('nums:', nums);
 
 
 
