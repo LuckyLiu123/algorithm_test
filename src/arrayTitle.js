@@ -991,14 +991,30 @@ function swap1(nums, left, right){
 }
 
 // const nums = [0,1,0,3,12];
-const nums = [0];
-moveZeroes(nums);
-console.log('nums:', nums);
+// const nums = [0];
+// moveZeroes(nums);
+// console.log('nums:', nums);
 
 
-
-
-
+//30. 存在重复元素 II(leetcode 219)
+// 给你一个整数数组 nums 和一个整数 k ，判断数组中是否存在两个 不同的索引 i 和 j ，
+// 满足 nums[i] == nums[j] 且 abs(i - j) <= k 。如果存在，返回 true ；否则，返回 false 。
+const containsNearbyDuplicate = (nums) => {
+    const map = new Map();
+    const n = nums.length;
+    for(let i = 0; i < n; i++){
+        const num = nums[i];
+        if(map.has(num) && Math.abs(i - map.get(num) <= k)){
+            return true;
+        }
+        map.set(num, i);
+    }
+    return false;
+}
+const nums = [1,2,3,1], k = 3;
+// const nums = [1,0,1,1], k = 1;
+// const nums = [1,2,3,1,2,3], k = 2;
+console.log('containsNearbyDuplicate:', containsNearbyDuplicate(nums, k));
 
 
 
