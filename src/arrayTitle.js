@@ -1047,10 +1047,36 @@ const summaryRanges = (nums) => {
 }
 
 // const nums = [0,1,2,4,5,7];
-const nums = [0,2,3,4,6,8,9];
-console.log('summaryRanges:', summaryRanges(nums));
+// const nums = [0,2,3,4,6,8,9];
+// console.log('summaryRanges:', summaryRanges(nums));
 
 
+// 32. 子集 II(leetcode 90)
+// 给你一个整数数组 nums ，其中可能包含重复元素，请你返回该数组所有可能的子集（幂集）。
+// 解集 不能 包含重复的子集。返回的解集中，子集可以按 任意顺序 排列。
+const subsetsWithDup = (nums) => {
+    nums.sort((a, b) => a - b);
+    let t = [], ans = [];
+    const dfs = (choosePre, cur, nums) => {
+        if(cur === nums.length){
+            ans.push(t.slice());
+            return;
+        }
+        dfs(false, cur + 1, nums);
+        if(!choosePre && cur > 0 && nums[cur - 1] === nums[cur]){
+            return;
+        }
+        t.push(nums[cur]);
+        dfs(true, cur + 1, nums);
+        t = t.slice(0, t.length - 1);
+    }
+    dfs(false, 0, nums);
+    return ans;
+}
+
+// const nums = [1,2,2];
+const nums = [0];
+console.log('subsetsWithDup:', subsetsWithDup(nums));
 
 
 
