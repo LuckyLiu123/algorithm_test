@@ -32,6 +32,140 @@ function myBuildTree(preorder, inorder, preorder_left, preorder_right, inorder_l
     return root;
 }
 
-const preorder = [3,9,20,15,7], inorder = [9,3,15,20,7];
+// const preorder = [3,9,20,15,7], inorder = [9,3,15,20,7];
 // const preorder = [-1], inorder = [-1];
-console.log('buildTree:', buildTree(preorder, inorder));
+// console.log('buildTree:', buildTree(preorder, inorder));
+
+
+// 2. 从中序与后序遍历序列构造二叉树(leetcode 106)
+// 给定两个整数数组 inorder 和 postorder ，其中 inorder 是二叉树的中序遍历， postorder 是同一棵树的后序遍历，请你构造并返回这颗 二叉树 。
+const buildTree2 = (inorder, postorder) => {
+    let post_idx;
+    const idx_map = new Map();
+    const helper = (in_left, in_right) => {
+        if(in_left > in_right){
+            return null;
+        }
+
+        // 选择 post_idx 位置的元素作为当前子树根节点
+        const root_val = postorder[post_idx];
+        const root = new TreeNode(root_val);
+
+        // 根据 root 所在位置分成左右两颗子树
+        const index = idx_map.get(root_val);
+
+        post_idx--;
+        // 构造右子树
+        root.right = helper(index + 1, in_right);
+        // 构造左子树
+        root.left = helper(in_left, index - 1);
+        return root;
+    }
+
+    // 从后序遍历的最后一个元素开始
+    post_idx = postorder.length - 1;
+
+    // let idx = 0;
+    inorder.forEach((val, idx) => {
+        idx_map.set(val, idx);
+    })
+    return helper(0, inorder.length - 1);
+}
+
+// const inorder = [9,3,15,20,7], postorder = [9,15,7,20,3];
+const inorder = [-1], postorder = [-1];
+console.log('buildTree2:', buildTree2(inorder, postorder));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
