@@ -73,13 +73,29 @@ const buildTree2 = (inorder, postorder) => {
 }
 
 // const inorder = [9,3,15,20,7], postorder = [9,15,7,20,3];
-const inorder = [-1], postorder = [-1];
-console.log('buildTree2:', buildTree2(inorder, postorder));
+// const inorder = [-1], postorder = [-1];
+// console.log('buildTree2:', buildTree2(inorder, postorder));
 
 
+// 3. 将有序数组转换为二叉搜索树(leetcode 108)
+// 给你一个整数数组 nums ，其中元素已经按 升序 排列，请你将其转换为一棵 高度平衡 二叉搜索树。
+// 高度平衡 二叉树是一棵满足「每个节点的左右两个子树的高度差的绝对值不超过 1 」的二叉树。
+const sortedArrayToBST = (nums) => {
+    const buildTree = (nums, idx_left, idx_right) => {
+        if(idx_left > idx_right){
+            return null;
+        }
+        const idx_root = Math.floor((idx_left + idx_right) / 2);
+        const root = new TreeNode(nums[idx_root]);
+        root.left = buildTree(nums, idx_left, idx_root - 1);
+        root.right = buildTree(nums, idx_root + 1, idx_right);
+        return root;
+    }
+    return buildTree(nums, 0, nums.length - 1);
+}
 
-
-
+const nums = [-10,-3,0,5,9];
+console.log('sortedArrayToBST:', sortedArrayToBST(nums));
 
 
 
