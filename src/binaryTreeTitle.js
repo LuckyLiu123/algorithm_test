@@ -94,8 +94,8 @@ const sortedArrayToBST = (nums) => {
     return buildTree(nums, 0, nums.length - 1);
 }
 
-const nums = [-10,-3,0,5,9];
-console.log('sortedArrayToBST:', sortedArrayToBST(nums));
+// const nums = [-10,-3,0,5,9];
+// console.log('sortedArrayToBST:', sortedArrayToBST(nums));
 
 
 
