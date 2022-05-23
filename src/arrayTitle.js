@@ -1126,17 +1126,34 @@ NumArray.prototype.sumRange = function(left, right) {
     return this.nums[right + 1] - this.nums[left];
 }
 
-const nums = [-2, 0, 3, -5, 2, -1];
-const left = 0;
-const right = 2;
-var obj = new NumArray(nums)
-var param_1 = obj.sumRange(left,right)
-console.log('param_1:', param_1);
+// const nums = [-2, 0, 3, -5, 2, -1];
+// const left = 0;
+// const right = 2;
+// var obj = new NumArray(nums)
+// var param_1 = obj.sumRange(left,right)
+// console.log('param_1:', param_1);
 
 
+// 35. 乘积最大子数组(leetcode 152)
+// 给你一个整数数组 nums ，请你找出数组中乘积最大的非空连续子数组（该子数组中至少包含一个数字），并返回该子数组所对应的乘积。
+// 测试用例的答案是一个 32-位 整数。子数组 是数组的连续子序列。
+// 方法一：动态规划
+const maxProduct = (nums) => {
+    let maxF = nums[0], minF = nums[0], ans = nums[0];
+    for(let i = 1; i < nums.length; i++){
+        let mx = maxF, mn = minF;
+        maxF = Math.max(mx * nums[i], Math.max(nums[i], mn * nums[i]));
+        minF = Math.min(mn * nums[i], Math.min(nums[i], mx * nums[i]));
+        ans = Math.max(ans, maxF);
+    }
+    return ans;
+}
 
-
-
+// const nums = [2,3,-2,4];
+// const nums = [-2,0,-1];
+// const nums = [-2];
+const nums = [-2, 1, -1, 1];
+console.log('maxProduct:', maxProduct(nums));
 
 
 
