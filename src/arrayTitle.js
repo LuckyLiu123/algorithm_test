@@ -1335,13 +1335,44 @@ const rotate3 = (nums, k) => {
 
 
 // const nums = [1,2,3,4,5,6,7], k = 3;
-const nums = [-1,-100,3,99], k = 2;
-console.log('rotate:', rotate3(nums, k));
+// const nums = [-1,-100,3,99], k = 2;
+// console.log('rotate:', rotate3(nums, k));
 
 
+// 41. 第三大的数(leetcode 414)
+// 给你一个非空数组，返回此数组中 第三大的数 。如果不存在，则返回数组中最大的数。
+const thirdMax1 = (nums) => {
+    nums.sort((a, b) => b - a);
+    for(let i = 1, diff = 1; i < nums.length; i++){
+        if(nums[i] !== nums[i - 1] && ++diff === 3){
+            return nums[i];
+        }
+    }
+    return nums[0];
+}
+
+const thirdMax2 = (nums) => {
+    let first = -Number.MAX_VALUE, second = -Number.MAX_VALUE, third = -Number.MAX_VALUE;
+    for(let i = 0; i < nums.length; i++){
+        if(nums[i] > first){
+            third = second;
+            second = first;
+            first = nums[i];
+        }else if(nums[i] > second && nums[i] < first){
+            third = second;
+            second = nums[i];
+        }else if(nums[i] > third && nums[i] < second){
+            third = nums[i];
+        }
+    }
+    return third === -Number.MAX_VALUE ? first : third;
+}
 
 
-
+const nums = [3, 2, 1];
+// const nums = [1, 2];
+// const nums = [2, 2, 3, 1];
+console.log('thirdMax:', thirdMax2(nums));
 
 
 
