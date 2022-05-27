@@ -1284,5 +1284,152 @@ const compare = (nums, idx1, idx2) => {
 }
 
 // const nums = [1,2,3,1];
-const nums = [1,2,1,3,5,6,4];
-console.log('findPeakElement:', findPeakElement(nums));
+// const nums = [1,2,1,3,5,6,4];
+// console.log('findPeakElement:', findPeakElement(nums));
+
+
+// 40. 轮转数组(leetcode 189)
+// 给你一个数组，将数组中的元素向右轮转 k 个位置，其中 k 是非负数。
+const rotate1 = (nums, k) => {
+    let i = 1;
+    while(i <= k){
+        const val = nums.pop();
+        nums.unshift(val);
+        i++;
+    }
+    return nums;
+}
+
+// 方法二：数组翻转
+const reverse1 = (nums, start, end) => {
+    while(start <= end){
+        const temp = nums[end];
+        nums[end] = nums[start];
+        nums[start] = temp;
+        start++;
+        end--;
+    }
+}
+
+const rotate2 = (nums, k) => {
+    const n = nums.length;
+    k = k % n;
+    reverse1(nums, 0, n - 1);
+    reverse1(nums, 0, k - 1);
+    reverse1(nums, k, n - 1);
+    return nums;
+}
+
+// 方法三：使用额外的数组
+const rotate3 = (nums, k) => {
+    const n = nums.length;
+    const newArr = new Array(n);
+    for(let i = 0; i < n; i++){
+        newArr[(i + k) % n] = nums[i];
+    }
+    for(let i = 0; i < n; i++){
+        nums[i] = newArr[i];
+    }
+    return nums;
+}
+
+
+// const nums = [1,2,3,4,5,6,7], k = 3;
+const nums = [-1,-100,3,99], k = 2;
+console.log('rotate:', rotate3(nums, k));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
