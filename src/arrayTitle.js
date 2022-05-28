@@ -1390,15 +1390,29 @@ const findDisappearedNumbers = (nums) => {
 }
 
 // const nums = [4,3,2,7,8,2,3,1];
-const nums = [1,1];
-console.log('findDisappearedNumbers:', findDisappearedNumbers(nums));
+// const nums = [1,1];
+// console.log('findDisappearedNumbers:', findDisappearedNumbers(nums));
 
 
+// 43. 最小操作次数使数组元素相等(leetcode 453)
+// 给你一个长度为 n 的整数数组，每次操作将会使 n - 1 个元素增加 1 。返回让数组所有元素相等的最小操作次数。
+/**
+ * 因为只需要找出让数组所有元素相等的最小操作次数，所以我们不需要考虑数组中各个元素的绝对大小，
+ * 即不需要真正算出数组中所有元素相等时的元素值，只需要考虑数组中元素相对大小的变化即可。
+ * 因此，每次操作既可以理解为使 n-1n−1 个元素增加 11，也可以理解使 11 个元素减少 11。显然，后者更利于我们的计算。
+*/
+const minMoves = (nums) => {
+    const minNum = Math.min(...nums);
+    let res = 0;
+    for(const num of nums){
+        res += num - minNum;
+    }
+    return res;
+}
 
-
-
-
-
+// const nums = [1,2,3];
+const nums = [1,1,1];
+console.log('minMoves:', minMoves(nums));
 
 
 
