@@ -1464,12 +1464,33 @@ const rob = (nums) => {
 }
 
 // const nums = [1,2,3,1];
-const nums = [2,7,9,3,1];
-console.log('rob:', rob(nums));
+// const nums = [2,7,9,3,1];
+// console.log('rob:', rob(nums));
 
 
+// 46. 在长度 2N 的数组中找出重复 N 次的元素(leetcode 961)
+/**
+ * 给你一个整数数组 nums ，该数组具有以下属性：
+ * - nums.length == 2 * n.
+ * - nums 包含 n + 1 个 不同的 元素
+ * - nums 中恰有一个元素重复 n 次
+ * - 找出并返回重复了 n 次的那个元素。
+*/
+const repeatedNTimes = (nums) => {
+    const set = new Set();
+    for(const num of nums){
+        if(set.has(num)){
+            return num;
+        }
+        set.add(num);
+    }
+    return -1;
+}
 
-
+// const nums = [1,2,3,3];
+// const nums = [2,1,2,5,3,2];
+const nums = [5,1,5,2,5,3,5,4];
+console.log('repeatedNTimes:', repeatedNTimes(nums));
 
 
 
