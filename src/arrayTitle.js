@@ -1489,9 +1489,60 @@ const repeatedNTimes = (nums) => {
 
 // const nums = [1,2,3,3];
 // const nums = [2,1,2,5,3,2];
-const nums = [5,1,5,2,5,3,5,4];
-console.log('repeatedNTimes:', repeatedNTimes(nums));
+// const nums = [5,1,5,2,5,3,5,4];
+// console.log('repeatedNTimes:', repeatedNTimes(nums));
 
+
+// 47. 岛屿数量(leetcode 200)
+/**
+ * 给你一个由 '1'（陆地）和 '0'（水）组成的的二维网格，请你计算网格中岛屿的数量。
+ * 岛屿总是被水包围，并且每座岛屿只能由水平方向和/或竖直方向上相邻的陆地连接形成。
+ * 此外，你可以假设该网格的四条边均被水包围。
+*/
+// 方法一：广度优先搜索
+const numIslands = (grid) => {
+    if(grid == null || grid.length === 0){
+        return 0;
+    }
+    const m = grid.length;
+    const n = grid[0].length;
+    let count = 0;
+
+    const dfs = (grid, row, col) => {
+        if(row < 0 || row >= m || col < 0 || col >= n || grid[row][col] === '0'){
+            return;
+        }
+        grid[row][col] = '0';
+        dfs(grid, row - 1, col);
+        dfs(grid, row + 1, col);
+        dfs(grid, row, col - 1);
+        dfs(grid, row, col + 1);
+    }
+
+    for(let i = 0; i < m; i++){
+        for(let j = 0; j < n; j++){
+            if(grid[i][j] === '1'){
+                count++;
+                dfs(grid, i, j);
+            }
+        }
+    }
+    return count;
+}
+
+// const grid = [
+//     ["1","1","1","1","0"],
+//     ["1","1","0","1","0"],
+//     ["1","1","0","0","0"],
+//     ["0","0","0","0","0"]
+// ];
+const grid = [
+    ["1","1","0","0","0"],
+    ["1","1","0","0","0"],
+    ["0","0","1","0","0"],
+    ["0","0","0","1","1"]
+];
+console.log('numIslands:', numIslands(grid));
 
 
 
