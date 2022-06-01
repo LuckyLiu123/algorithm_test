@@ -1536,18 +1536,65 @@ const numIslands = (grid) => {
 //     ["1","1","0","0","0"],
 //     ["0","0","0","0","0"]
 // ];
-const grid = [
-    ["1","1","0","0","0"],
-    ["1","1","0","0","0"],
-    ["0","0","1","0","0"],
-    ["0","0","0","1","1"]
-];
-console.log('numIslands:', numIslands(grid));
+// const grid = [
+//     ["1","1","0","0","0"],
+//     ["1","1","0","0","0"],
+//     ["0","0","1","0","0"],
+//     ["0","0","0","1","1"]
+// ];
+// console.log('numIslands:', numIslands(grid));
 
 
+// 48. 计数质数(leetcode 204)
+// 给定整数 n ，返回 所有小于非负整数 n 的质数的数量 。
+// 方法一：枚举
+/**
+ * 考虑质数的定义：在大于 1 的自然数中，除了 1 和它本身以外不再有其他因数的自然数。因此对于每个数 x，
+ * 我们可以从小到大枚举 [2, x−1] 中的每个数 y，判断 y 是否为 x 的因数。
+ * 但这样判断一个数是否为质数的时间复杂度最差情况下会到 O(n)，无法通过所有测试数据。考虑到如果 y 是 x 的因数，
+ * 那么 x / y 也必然是 x 的因数，因此我们只要校验 y 或者 x / y 即可。而如果我们每次选择校验两者中的较小数，
+ * 则不难发现较小数一定落在 [2, Math.sqrt(x)] 的区间中，因此我们只需要枚举 [2, Math.sqrt(x)] 中的所有数即可，
+ * 这样单次检查的时间复杂度从 O(n) 降低至了 O(Math.sqrt(n))。
+*/
+const countPrimes1 = (n) => {
+    let ans = 0;
+    for(let i = 2; i < n; i++){
+        ans += isPrime(i);
+    }
+    return ans;
+}
 
+const isPrime = (x) => {
+    for(let i = 2; i * i <= x; i++){
+        if(x % i === 0){
+            return false;
+        }
+    }
+    return true;
+}
 
+// 方法二：埃氏筛
+/**
+ * 我们考虑这样一个事实：如果 xx 是质数，那么大于 x 的 x 的倍数 2x,3x,… 一定不是质数，因此我们可以从这里入手。
+ * 我们设 isPrime[i] 表示数 i 是不是质数，如果是质数则为 1，否则为 0。从小到大遍历每个数，如果这个数为质数，
+ * 则将其所有的倍数都标记为合数（除了该质数本身），即 0，这样在运行结束的时候我们即能知道质数的个数。
+*/
+const countPrimes2 = (n) => {
+    const isPrimes = new Array(n).fill(1);
+    let ans = 0;
+    for(let i = 2; i < n; i++){
+        if(isPrimes[i]){
+            ans++;
+            for(let j = i * i; j < n; j += i){
+                isPrimes[j] = 0;
+            }
+        }
+    }
+    return ans;
+}
 
+const n = 367184;
+console.log('countPrimes:', countPrimes2(n));
 
 
 
