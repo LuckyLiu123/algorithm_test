@@ -1628,13 +1628,61 @@ const islandPerimeter = (grid) => {
 
 // const grid = [[0,1,0,0],[1,1,1,0],[0,1,0,0],[1,1,0,0]];
 // const grid = [[1]];
-const grid = [[1,0]];
-console.log('islandPerimeter:', islandPerimeter(grid));
+// const grid = [[1,0]];
+// console.log('islandPerimeter:', islandPerimeter(grid));
 
 
+// 50. 长度最小的子数组(leetcode 209)
+// 给定一个含有 n 个正整数的数组和一个正整数 target 。找出该数组中满足其和 ≥ target 的长度最小的 连续子数组 
+// [numsl, numsl+1, ..., numsr-1, numsr] ，并返回其长度。如果不存在符合条件的子数组，返回 0 。
+// 方法一：暴力法
+const minSubArrayLen1 = (target, nums) => {
+    const n = nums.length;
+    let ans = Number.MAX_VALUE;
+    for(let i = 0; i < n; i++){
+        let sum = 0;
+        for(let j = i; j < n; j++){
+            sum += nums[j];
+            if(sum >= target){
+                ans = Math.min(ans, j - i + 1);
+                break;
+            }
+        }
+    }
+    return ans === Number.MAX_VALUE ? 0 : ans;
+}
 
+// 方法二：滑动窗口
+/**
+ * 定义两个指针 start 和 end 分别表示子数组（滑动窗口窗口）的开始位置和结束位置，维护变量sum 存储子数组中的元素和（即从 nums[start] 到 nums[end] 的元素和）。
+ * 初始状态下，start 和 end 都指向下标 0，sum 的值为 0。
+ * 每一轮迭代，将 nums[end] 加到 sum，如果 sum≥s，则更新子数组的最小长度（此时子数组的长度是 end−start+1），然后将 nums[start] 从 sum 中减去并将 start 右移，
+ * 直到 sum<s，在此过程中同样更新子数组的最小长度。在每一轮迭代的最后，将 end 右移。
+*/
+const minSubArrayLen2 = (target, nums) => {
+    const n = nums.length;
+    if(n === 0){
+        return 0;
+    }
+    let ans = Number.MAX_VALUE;
+    let sum = 0;
+    let start = 0, end = 0;
+    while(end < n){
+        sum += nums[end];
+        while(sum >= target){
+            ans = Math.min(ans, end - start + 1);
+            sum -= nums[start];
+            start++;
+        }
+        end++;
+    }
+    return ans === Number.MAX_VALUE ? 0 : ans;
+}
 
-
+const target = 7, nums = [2,3,1,2,4,3];
+// const target = 4, nums = [1,4,4];
+// const target = 11, nums = [1,1,1,1,1,1,1,1];
+console.log('minSubArrayLen:', minSubArrayLen2(target, nums));
 
 
 
