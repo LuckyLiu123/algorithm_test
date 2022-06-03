@@ -1679,15 +1679,34 @@ const minSubArrayLen2 = (target, nums) => {
     return ans === Number.MAX_VALUE ? 0 : ans;
 }
 
-const target = 7, nums = [2,3,1,2,4,3];
+// const target = 7, nums = [2,3,1,2,4,3];
 // const target = 4, nums = [1,4,4];
 // const target = 11, nums = [1,1,1,1,1,1,1,1];
-console.log('minSubArrayLen:', minSubArrayLen2(target, nums));
+// console.log('minSubArrayLen:', minSubArrayLen2(target, nums));
 
 
+// 51. 最大连续 1 的个数(leetcode 485)
+// 给定一个二进制数组 nums ， 计算其中最大连续 1 的个数。
+const findMaxConsecutiveOnes = (nums) => {
+    const n = nums.length;
+    let ans = 0, i = 0;
+    while(i < n){
+        let num = 0;
+        while(nums[i] === 1){
+            num++;
+            i++;
+        }
+        ans = Math.max(ans, num);
+        while(nums[i] === 0){
+            i++;
+        }
+    }
+    return ans;
+}
 
-
-
+// const nums = [1,1,0,1,1,1];
+const nums = [1,0,1,1,0,1];
+console.log('findMaxConsecutiveOnes:', findMaxConsecutiveOnes(nums));
 
 
 
