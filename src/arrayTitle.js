@@ -1750,15 +1750,55 @@ const findPoisonedDuration2 = (timeSeries, duration) => {
     }
     return ans;
 }
-const timeSeries = [1,4], duration = 2;
+// const timeSeries = [1,4], duration = 2;
 // const timeSeries = [1,2], duration = 2;
-console.log('findPoisonedDuration:', findPoisonedDuration2(timeSeries, duration));
+// console.log('findPoisonedDuration:', findPoisonedDuration2(timeSeries, duration));
 
 
+// 53. 数组中的第K个最大元素(leetcode 215)
+// 给定整数数组 nums 和整数 k，请返回数组中第 k 个最大的元素。
+// 请注意，你需要找的是数组排序后的第 k 个最大的元素，而不是第 k 个不同的元素。
+// 方法一：基于快速排序的选择方法
+const findKthLargest = (nums, k) => {
 
+    const quickSelect = (nums, l, r, index) => {
+        const q = randomPartition(nums, l, r);
+        if(q === index){
+            return nums[q];
+        }else{
+            return q < index ? quickSelect(nums, q + 1, r, index) : quickSelect(nums, l, q - 1, index);
+        }
+    }
 
+    const randomPartition = (nums, l, r) => {
+        let i = Math.floor(Math.random() * (r - l + 1)) + l;
+        swap(nums, i, r);
+        return partition(nums, l, r);
+    }
 
+    const partition = (nums, l, r) => {
+        let x = nums[r], i = l - 1;
+        for(let j = l; j < r; j++){
+            if(nums[j] <= x){
+                swap(nums, ++i, j);
+            }
+        }
+        swap(nums, i + 1, r);
+        return i + 1;
+    }
 
+    const swap = (nums, l, r) => {
+        const temp = nums[l];
+        nums[l] = nums[r];
+        nums[r] = temp;
+    }
+
+    return quickSelect(nums, 0, nums.length - 1, nums.length - k);
+}
+
+// const nums = [3,2,1,5,6,4], k = 2;
+const nums = [3,2,3,1,2,4,5,5,6], k = 4;
+console.log('findKthLargest:', findKthLargest(nums, k));
 
 
 
