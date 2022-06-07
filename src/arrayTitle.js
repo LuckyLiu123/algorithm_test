@@ -1797,14 +1797,39 @@ const findKthLargest = (nums, k) => {
 }
 
 // const nums = [3,2,1,5,6,4], k = 2;
-const nums = [3,2,3,1,2,4,5,5,6], k = 4;
-console.log('findKthLargest:', findKthLargest(nums, k));
+// const nums = [3,2,3,1,2,4,5,5,6], k = 4;
+// console.log('findKthLargest:', findKthLargest(nums, k));
 
 
+// 54. 打家劫舍 II(leetcode 213)
+// 你是一个专业的小偷，计划偷窃沿街的房屋，每间房内都藏有一定的现金。这个地方所有的房屋都 围成一圈 ，
+// 这意味着第一个房屋和最后一个房屋是紧挨着的。同时，相邻的房屋装有相互连通的防盗系统，如果两间相邻的房屋在同一晚上被小偷闯入，系统会自动报警 。
+// 给定一个代表每个房屋存放金额的非负整数数组，计算你 在不触动警报装置的情况下 ，今晚能够偷窃到的最高金额。
+// 方法一：动态规划
+const rob1 = (nums) => {
+    const len = nums.length;
+    if(len === 1){
+        return nums[0];
+    }else if(len === 2){
+        return Math.max(nums[0], nums[1]);
+    }
+    return Math.max(robRange(nums, 0, len - 2), robRange(nums, 1, len - 1));
+}
 
+const robRange = (nums, start, end) => {
+    let first = nums[start], second = Math.max(nums[start], nums[start + 1]);
+    for(let i = start + 2; i <= end; i++){
+        const temp = second;
+        second = Math.max(first + nums[i], second);
+        first = temp;
+    }
+    return second;
+}
 
-
-
+// const nums = [2,3,2];
+// const nums = [1,2,3,1];
+const nums = [1,2,3];
+console.log('rob1:', rob1(nums));
 
 
 
