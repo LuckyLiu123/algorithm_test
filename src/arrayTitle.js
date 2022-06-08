@@ -295,7 +295,8 @@ const plusOne = (digits) => {
 
 //9. 组合总和(leetcode 39)
 /**
- * 给你一个 无重复元素 的整数数组 candidates 和一个目标整数 target ，找出 candidates 中可以使数字和为目标数 target 的 所有 不同组合 ，并以列表形式返回。你可以按 任意顺序 返回这些组合。
+ * 给你一个 无重复元素 的整数数组 candidates 和一个目标整数 target ，找出 candidates 中可以使数字和为目标数 target 的 所有 不同组合 ，
+ * 并以列表形式返回。你可以按 任意顺序 返回这些组合。
  * candidates 中的 同一个 数字可以 无限制重复被选取 。如果至少一个数字的被选数量不同，则两种组合是不同的。 
 */
 /**
@@ -1828,14 +1829,65 @@ const robRange = (nums, start, end) => {
 
 // const nums = [2,3,2];
 // const nums = [1,2,3,1];
-const nums = [1,2,3];
-console.log('rob1:', rob1(nums));
+// const nums = [1,2,3];
+// console.log('rob1:', rob1(nums));
 
 
+// 55. 组合总和 III(leetcode 216)
+/**
+ * 找出所有相加之和为 n 的 k 个数的组合，且满足下列条件：
+ * - 只使用数字1到9
+ * - 每个数字 最多使用一次 
+ * 返回 所有可能的有效组合的列表 。该列表不能包含相同的组合两次，组合可以以任何顺序返回。
+*/
+// 方法一：二进制（子集）枚举
+const combinationSum31 = (k, n) => {
+    let temp = [];
+    const ans = [];
 
+    const check = (mask, k, n) => {
+        temp = [];
+        for(let i = 0; i < 9; i++){
+            if((1 << i) & mask){
+                temp.push(i + 1);
+            }
+        }
+        return temp.length === k && temp.reduce((prev, val) => val + prev, 0) === n;
+    }
 
+    for(let mask = 0; mask < (1 << 9); mask++){
+        if(check(mask, k, n)){
+            ans.push(temp);
+        }
+    }
+    return ans;
+}
 
+// 方法二：组合枚举
+const combinationSum32 = (k, n) => {
+    const res = [];
+    const temp = [];
+    const dfs = (cur, n, k, sum, res) => {
+        if(temp.length + (n - cur + 1) < k || temp.length > k){
+            return;
+        }
+        if(temp.length === k && temp.reduce((prev, val) => prev + val, 0) === sum){
+            res.push(temp.slice());
+            return;
+        }
+        temp.push(cur);
+        dfs(cur + 1, n, k, sum, res);
+        temp.pop();
+        dfs(cur + 1, n, k, sum, res);
+    }
 
+    dfs(1, 9, k, n, res);
+    return res;
+}
+
+const k = 3, n = 7;
+// const k = 3, n = 9;
+console.log('combinationSum3:', combinationSum32(k, n));
 
 
 
