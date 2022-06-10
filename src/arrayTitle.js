@@ -1935,16 +1935,80 @@ const getID = (x, w) => {
 
 // const nums = [1,2,3,1], k = 3, t = 0;
 // const nums = [1,0,1,1], k = 1, t = 2;
-const nums = [1,5,9,1,5,9], k = 2, t = 3;
-console.log('containsNearbyAlmostDuplicate:', containsNearbyAlmostDuplicate2(nums, k, t));
+// const nums = [1,5,9,1,5,9], k = 2, t = 3;
+// console.log('containsNearbyAlmostDuplicate:', containsNearbyAlmostDuplicate2(nums, k, t));
 
 
+// 57. 组合总和 II(leetcode 40)
+// 给定一个候选人编号的集合 candidates 和一个目标数 target ，找出 candidates 中所有可以使数字和为 target 的组合。
+// candidates 中的每个数字在每个组合中只能使用 一次 。
+// 注意：解集不能包含重复的组合。 
+const combinationSum2 = (candidates, target) => {
+    const freq = [];
+    const ans = [];
+    const sequence = [];
+
+    candidates.sort((a, b) => a - b);
+    for(const num of candidates){
+        const len = freq.length;
+        if(len === 0 || num !== freq[len - 1][0]){
+            freq.push([num, 1]);
+        }else{
+            ++freq[len - 1][1];
+        }
+    }
+    console.log('freq:', freq);
+    const dfs = (pos, rest) => {
+        if(rest === 0){
+            ans.push(sequence);
+            return;
+        }
+        if(pos === freq.length || rest < freq[pos][0]){
+            return;
+        }
+        dfs(pos + 1, rest);
+        const most = Math.min(Math.floor(rest / freq[pos][0]), freq[pos][1]);
+        for(let i = 1; i <= most; i++){
+            sequence.push(freq[pos][0]);
+            dfs(pos + 1, rest - i * freq[pos][0]);
+        }
+        for(let i = 1; i <= most; i++){
+            sequence.pop();
+        }
+    }
+
+    dfs(0, target);
+    return ans;
+}
+
+// const candidates = [10,1,2,7,6,1,5], target = 8;
+// console.log('combinationSum2:', combinationSum2(candidates, target));
 
 
-
-
-
-
+// 58. 多数元素 II(leetcode 229)
+// 给定一个大小为 n 的整数数组，找出其中所有出现超过 ⌊ n/3 ⌋ 次的元素。
+const majorityElement2 = (nums) => {
+    const ans = [];
+    const n = nums.length;
+    const map = new Map();
+    for(const num of nums) {
+        if(!map[num]){
+            map[num] = 1;
+        }else{
+            ++map[num];
+        }
+    }
+    for(const key in map){
+        if(map[key] > n / 3){
+            ans.push(Number(key));
+        }
+    }
+    return ans;
+}
+// const nums = [3,2,3];
+// const nums = [1];
+const nums = [1,2];
+console.log('majorityElement2:', majorityElement2(nums));
 
 
 
