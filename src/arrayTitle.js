@@ -2007,10 +2007,71 @@ const majorityElement2 = (nums) => {
 }
 // const nums = [3,2,3];
 // const nums = [1];
-const nums = [1,2];
-console.log('majorityElement2:', majorityElement2(nums));
+// const nums = [1,2];
+// console.log('majorityElement2:', majorityElement2(nums));
 
 
+// 59. 除自身以外数组的乘积(leetcode 238)
+// 给你一个整数数组 nums，返回 数组 answer ，其中 answer[i] 等于 nums 中除 nums[i] 之外其余各元素的乘积 。
+// 题目数据 保证 数组 nums之中任意元素的全部前缀元素和后缀的乘积都在  32 位 整数范围内。
+// 请不要使用除法，且在 O(n) 时间复杂度内完成此题。
+// 方法一：左右乘积列表
+const productExceptSelf1 = (nums) => {
+    const n = nums.length;
+    // L 和 R 分别表示左右两侧的乘积列表
+    const L = new Array(n);
+    const R = new Array(n);
+    const answer = new Array(n);
+
+    // L[i] 为索引 i 左侧所有元素的乘积
+    // 对于索引为 '0' 的元素，因为左侧没有元素，所以 L[0] = 1
+    L[0] = 1;
+    for(let i = 1; i < n; i++){
+        L[i] = nums[i - 1] * L[i - 1];
+    }
+
+    // R[i] 为索引 i 右侧所有元素的乘积
+    // 对于索引为 'length-1' 的元素，因为右侧没有元素，所以 R[length-1] = 1
+    R[n - 1] = 1;
+    for(let i = n - 2; i >= 0; i--){
+        R[i] = nums[i + 1] * R[i + 1];
+    }
+
+    // 对于索引 i，除 nums[i] 之外其余各元素的乘积就是左侧所有元素的乘积乘以右侧所有元素的乘积
+    for(let i = 0; i < n; i++){
+        answer[i] = L[i] * R[i];
+    }
+    return answer;
+}
+
+// 方法二：空间复杂度 O(1)O(1) 的方法
+/**
+ * 思路：
+ * 初始化 answer 数组，对于给定索引 i，answer[i] 代表的是 i 左侧所有数字的乘积。
+ * 构造方式与之前相同，只是我们试图节省空间，先把 answer 作为方法一的 L 数组。
+ * 这种方法的唯一变化就是我们没有构造 R 数组。而是用一个遍历来跟踪右边元素的乘积。
+ * 并更新数组 answer[i] = answer[i] ∗ R。然后 RR 更新为 R = R ∗ nums[i]，其中变量 R 表示的就是索引右侧数字的乘积。
+*/
+const productExceptSelf2 = (nums) => {
+    const n = nums.length;
+    const answer = new Array(n);
+
+    answer[0] = 1;
+    for(let i = 1; i < n; i++){
+        answer[i] = nums[i - 1] * answer[i - 1];
+    }
+
+    let R = 1;
+    for(let i = n - 1; i >= 0; i--){
+        answer[i] = answer[i] * R;
+        R *= nums[i];
+    }
+    return answer;
+}
+
+const nums = [1,2,3,4];
+// const nums = [-1,1,0,-3,3];
+console.log('productExceptSelf:', productExceptSelf2(nums));
 
 
 
