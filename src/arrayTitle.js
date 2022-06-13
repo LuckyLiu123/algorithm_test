@@ -2098,9 +2098,38 @@ const maximalSquare = (matrix) => {
 }
 // const matrix = [["1","0","1","0","0"],["1","0","1","1","1"],["1","1","1","1","1"],["1","0","0","1","0"]];
 // const matrix = [["0","1"],["1","0"]];
-const matrix = [["0"]];
-console.log('maximalSquare:', maximalSquare(matrix));
+// const matrix = [["0"]];
+// console.log('maximalSquare:', maximalSquare(matrix));
 
 
+// 61. 滑动窗口最大值(leetcode 239)
+// 给你一个整数数组 nums，有一个大小为 k 的滑动窗口从数组的最左侧移动到数组的最右侧。你只可以看到在滑动窗口内的 k 个数字。滑动窗口每次只向右移动一位。
+// 返回 滑动窗口中的最大值 。
+// 方法二：单调队列
+const maxSlidingWindow = (nums, k) => {
+    const n = nums.length;
+    const q = [];
+    for(let i = 0; i < k; i++){
+        while(q.length && nums[i] >= nums[q[q.length - 1]]){
+            q.pop();
+        }
+        q.push(i);
+    }
 
+    const ans = [nums[q[0]]];
+    for(let i = k; i < n; i++){
+        while(q.length && nums[i] >= nums[q[q.length - 1]]){
+            q.pop();
+        }
+        q.push(i);
+        while(q[0] <= i - k){
+            q.shift();
+        }
+        ans.push(nums[q[0]]);
+    }
+    return ans;
+}
 
+const nums = [1,3,-1,-3,5,3,6,7], k = 3;
+// const nums = [1], k = 1;
+console.log('maxSlidingWindow:', maxSlidingWindow(nums, k));
