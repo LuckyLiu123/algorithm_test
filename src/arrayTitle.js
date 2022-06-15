@@ -2140,7 +2140,7 @@ const maxSlidingWindow = (nums, k) => {
 // 方法一：动态规划
 /**
  * 思路：
- * 创建两个长度为 nn 的数组 leftMax 和 rightMax。对于 0≤i<n，leftMax[i] 表示下标 i 及其左边的位置中，height 的最大高度，
+ * 创建两个长度为 n 的数组 leftMax 和 rightMax。对于 0≤i<n，leftMax[i] 表示下标 i 及其左边的位置中，height 的最大高度，
  * rightMax[i] 表示下标 i 及其右边的位置中，height 的最大高度。
  * 显然，leftMax[0]=height[0]，rightMax[n−1]=height[n−1]。两个数组的其余元素的计算如下：
  * - 当 1≤i≤n−1 时，leftMax[i] = max(leftMax[i−1], height[i])；
@@ -2235,10 +2235,52 @@ const trap3 = (height) => {
 
 
 // const height = [0,1,0,2,1,0,1,3,2,1,2,1];
-const height = [4,2,0,3,2,5];
-console.log('trap:', trap3(height));
+// const height = [4,2,0,3,2,5];
+// console.log('trap:', trap3(height));
 
 
+// 63. 分发糖果(leetcode 135)
+/**
+ * n 个孩子站成一排。给你一个整数数组 ratings 表示每个孩子的评分。
+ * 你需要按照以下要求，给这些孩子分发糖果：
+ * - 每个孩子至少分配到 1 个糖果。
+ * - 相邻两个孩子评分更高的孩子会获得更多的糖果。
+ * 请你给每个孩子分发糖果，计算并返回需要准备的 最少糖果数目 。
+*/
+// 方法一：两次遍历
+/**
+ * 我们可以将「相邻的孩子中，评分高的孩子必须获得更多的糖果」这句话拆分为两个规则，分别处理。
+ * - 左规则：当 ratings[i − 1] < ratings[i] 时，i 号学生的糖果数量将比 i − 1 号孩子的糖果数量多。
+ * - 右规则：当 ratings[i] > ratings[i + 1] 时，i 号学生的糖果数量将比 i + 1 号孩子的糖果数量多。
+ * 我们遍历该数组两次，处理出每一个学生分别满足左规则或右规则时，最少需要被分得的糖果数量。每个人最终分得的糖果数量即为这两个数量的最大值。
+*/
+const candy = (ratings) => {
+    const n = ratings.length;
+    const left = new Array(n).fill(0);
+    for(let i = 0 ; i < n; i++){
+        if(i > 0 && ratings[i] > ratings[i - 1]){
+            left[i] = left[i - 1] + 1;
+        }else{
+            left[i] = 1;
+        }
+    }
+
+    let right = 0, ret = 0;
+    for(let i = n - 1; i >= 0; i--){
+        if(i < n - 1 && ratings[i] > ratings[i + 1]){
+            right++;
+        }else{
+            right = 1;
+        }
+        ret += Math.max(left[i], right);
+    }
+    return ret;
+}
+
+// const ratings = [1,0,2];
+// const ratings = [1,2,2];
+const ratings = [1,2,3];
+console.log('candy:', candy(ratings));
 
 
 
