@@ -456,7 +456,7 @@ const singleNumber = (nums) => {
 }
 // const nums = [2,2,1];
 // const nums = [4,1,2,1,2];
-// console.log('singleNumber:', singleNumber(nums));
+// console.log('2:', singleNumber(nums));
 
 
 //13. 多数元素(leetcode 169)
@@ -2393,12 +2393,35 @@ const search3 = (nums, target) => {
 }
 
 // const nums = [2,5,6,0,0,1,2], target = 0;
-const nums = [2,5,6,0,0,1,2], target = 3;
-console.log('search3:', search3(nums, target));
+// const nums = [2,5,6,0,0,1,2], target = 3;
+// console.log('search3:', search3(nums, target));
 
 
+// 66. 只出现一次的数字 III(leetcode 260)
+// 给定一个整数数组 nums，其中恰好有两个元素只出现一次，其余所有元素均出现两次。 找出只出现一次的那两个元素。你可以按 任意顺序 返回答案。
+// 进阶：你的算法应该具有线性时间复杂度。你能否仅使用常数空间复杂度来实现？
+const singleNumber2 = (nums) => {
+    const map = new Map();
+    for(const num of nums){
+        if(!map.has(num)){
+            map.set(num, 1);
+        }else{
+            map.set(num, map.get(num) + 1);
+        }
+    }
 
-
+    const ans = [];
+    for(const [key, value] of map){
+        if(value === 1){
+            ans.push(key);
+        }
+    }
+    return ans;
+}
+// const nums = [1,2,1,3,2,5];
+// const nums = [-1,0];
+const nums = [0,1];
+console.log('singleNumber2:', singleNumber2(nums));
 
 
 
