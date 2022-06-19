@@ -15,11 +15,51 @@ const addBinary = (a, b) => {
     ans.reverse();
     return ans.join('');
 }
-const a = "11", b = "1";
+// const a = "11", b = "1";
 // const a = "1010", b = "1011";
-console.log('addBinary:', addBinary(a, b));
+// console.log('addBinary:', addBinary(a, b));
 
+// 2. 电话号码的字母组合(leetcode 17)
+// 给定一个仅包含数字 2-9 的字符串，返回所有它能表示的字母组合。答案可以按 任意顺序 返回。
+// 给出数字到字母的映射如下（与电话按键相同）。注意 1 不对应任何字母。
+const letterCombinations = (digits) => {
+    const combinations = [];
+    if(digits.length === 0){
+        return [];
+    }
+    const map = {
+        '2': 'abc',
+        '3': 'def',
+        '4': 'ghi',
+        '5': 'jkl',
+        '6': 'mno',
+        '7': 'pqrs',
+        '8': 'tuv',
+        '9': 'wxyz'
+    };
 
+    const backtrack = (combinations, map, digits, index, combination) => {
+        if(index === digits.length){
+            combinations.push(combination.join(''));
+        }else{
+            const char = digits.charAt(index);
+            const leeters = map[char];
+            for(let i = 0; i < leeters.length; i++){
+                combination.push(leeters[i]);
+                backtrack(combinations, map, digits, index + 1, combination);
+                combination.pop();
+            }
+        }
+    }
+
+    backtrack(combinations, map, digits, 0, []);
+    return combinations;
+}
+
+// const digits = "23";
+// const digits = "2";
+const digits = "";
+console.log('letterCombinations:', letterCombinations(digits));
 
 
 
