@@ -58,13 +58,36 @@ const letterCombinations = (digits) => {
 
 // const digits = "23";
 // const digits = "2";
-const digits = "";
-console.log('letterCombinations:', letterCombinations(digits));
+// const digits = "";
+// console.log('letterCombinations:', letterCombinations(digits));
 
+// 3. 验证回文串(leetcode 125)
+// 给定一个字符串，验证它是否是回文串，只考虑字母和数字字符，可以忽略字母的大小写。
+// 说明：本题中，我们将空字符串定义为有效的回文串。
+const isPalindrome = (s) => {
+    let left = 0, right = s.length - 1;
+    const req = /[0-9a-zA-Z]/i;
+    while (left < right) {
+        while (left < right && !req.test(s.charAt(left))) {
+            left++;
+        }
+        while (left < right && !req.test(s.charAt(right))) {
+            right--;
+        }
+        if (left < right) {
+            if(s.charAt(left).toLowerCase() !== s.charAt(right).toLowerCase()) {
+                return false;
+            }
+            left++;
+            right--;
+        }
+    }
+    return true;
+}
 
-
-
-
+const s = "A man, a plan, a canal: Panama";
+// const s = "race a car";
+console.log('isPalindrome:', isPalindrome(s));
 
 
 
