@@ -2420,12 +2420,8 @@ const singleNumber2 = (nums) => {
 }
 // const nums = [1,2,1,3,2,5];
 // const nums = [-1,0];
-const nums = [0,1];
-console.log('singleNumber2:', singleNumber2(nums));
-
-
-
-
+// const nums = [0,1];
+// console.log('singleNumber2:', singleNumber2(nums));
 
 
 

@@ -85,10 +85,39 @@ const isPalindrome = (s) => {
     return true;
 }
 
-const s = "A man, a plan, a canal: Panama";
+// const s = "A man, a plan, a canal: Panama";
 // const s = "race a car";
-console.log('isPalindrome:', isPalindrome(s));
+// console.log('isPalindrome:', isPalindrome(s));
 
+
+// 4. 括号生成(leetcode 22)
+// 数字 n 代表生成括号的对数，请你设计一个函数，用于能够生成所有可能的并且 有效的 括号组合。
+// 方法二：回溯法
+const generateParenthesis = (n) => {
+    const ans = [];
+
+    const backtrack = (ans, cur, open, close, max) => {
+        if(cur.length === max * 2){
+            ans.push(cur.join(''));
+        }
+        if(open < max){
+            cur.push('(');
+            backtrack(ans, cur, open + 1, close, max);
+            cur.pop();
+        }
+        if(close < open){
+            cur.push(')');
+            backtrack(ans, cur, open, close + 1, max);
+            cur.pop();
+
+        }
+    }
+
+    backtrack(ans, [], 0, 0, n);
+    return ans;
+}
+
+console.log('generateParenthesis:', generateParenthesis(5));
 
 
 
