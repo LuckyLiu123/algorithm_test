@@ -98,9 +98,25 @@ const sortedArrayToBST = (nums) => {
 // console.log('sortedArrayToBST:', sortedArrayToBST(nums));
 
 
+// 4. 二叉树的中序遍历(leetcode 94)
+// 给定一个二叉树的根节点 root ，返回 它的 中序 遍历 。
+const inorderTraversal = (root) => {
+    const ans = [];
+    const inorder = (root) => {
+        if(!root){
+            return;
+        }
+        inorder(root.left);
+        ans.push(root.val);
+        inorder(root.right);
+    }
 
+    inorder(root);
+    return ans;
+}
 
-
+const root = [1,null,2,3];
+console.log('inorderTraversal:', inorderTraversal(root));
 
 
 
