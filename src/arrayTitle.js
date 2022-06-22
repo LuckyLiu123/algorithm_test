@@ -2424,8 +2424,11 @@ const singleNumber2 = (nums) => {
 // console.log('singleNumber2:', singleNumber2(nums));
 
 
-
-
+// 67. 全排列(leetcode 46)
+// 给定一个不含重复数字的数组 nums ，返回其 所有可能的全排列 。你可以 按任意顺序 返回答案。
+const permute = (nums) => {
+    
+}
 
 
 

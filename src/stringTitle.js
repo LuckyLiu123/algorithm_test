@@ -160,7 +160,7 @@ const countAndSay = (n) => {
     return str;
 }
 
-console.log('countAndSay:', countAndSay(5));
+// console.log('countAndSay:', countAndSay(5));
 
 
 
