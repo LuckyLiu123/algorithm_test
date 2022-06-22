@@ -2427,9 +2427,31 @@ const singleNumber2 = (nums) => {
 // 67. 全排列(leetcode 46)
 // 给定一个不含重复数字的数组 nums ，返回其 所有可能的全排列 。你可以 按任意顺序 返回答案。
 const permute = (nums) => {
-    
+    const res = [], path = [];
+    const used = new Array(nums.length).fill(false);
+    const dfs = () => {
+        if(path.length === nums.length){
+            res.push(path.slice());
+            return;
+        }
+        for(let i = 0; i < nums.length; i++){
+            if(used[i]) continue;
+            path.push(nums[i]);
+            used[i] = true;
+            dfs();
+            path.pop();
+            used[i] = false;
+        }
+    }
+
+    dfs();
+    return res;
 }
 
+// const nums = [1,2,3];
+// const nums = [0,1];
+const nums = [1];
+console.log('permute:', permute(nums));
 
 
 
