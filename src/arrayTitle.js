@@ -2450,14 +2450,42 @@ const permute = (nums) => {
 
 // const nums = [1,2,3];
 // const nums = [0,1];
-const nums = [1];
-console.log('permute:', permute(nums));
+// const nums = [1];
+// console.log('permute:', permute(nums));
 
 
+// 68. 全排列 II(leetcode 47)
+// 给定一个可包含重复数字的序列 nums ，按任意顺序 返回所有不重复的全排列。
+// 方法一：搜索回溯
+// 思路：要解决重复问题，我们只要设定一个规则，保证在填第 idx 个数的时候重复数字只会被填入一次即可。而在本题解中，
+// 我们选择对原数组排序，保证相同的数字都相邻，然后每次填入的数一定是这个数所在重复数集合中「从左往右第一个未被填过的数字」
+const permuteUnique = (nums) => {
+    const n = nums.length;
+    const res = [];
+    const vis = new Array(n).fill(false);
+    const dfs = (idx, perm) => {
+        if(idx === n){
+            res.push(perm.slice());
+            return;
+        }
+        for(let i = 0; i < n; i++){
+            if(vis[i] || (i > 0 && nums[i] === nums[i - 1] && !vis[i - 1])){
+                continue;
+            }
+            perm.push(nums[i]);
+            vis[i] = true;
+            dfs(idx + 1, perm);
+            vis[i] = false;
+            perm.pop();
+        }
+    }
+    nums.sort((a, b) => a - b);
+    dfs(0, []);
+    return res;
+}
 
-
-
-
+const nums = [1,1,2];
+console.log('permuteUnique:', permuteUnique(nums));
 
 
 
