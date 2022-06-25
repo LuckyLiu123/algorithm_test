@@ -2508,15 +2508,57 @@ const rotate = (matrix) => {
     return matrix;
 }
 
-const matrix = [[1,2,3],[4,5,6],[7,8,9]];
+// const matrix = [[1,2,3],[4,5,6],[7,8,9]];
 // const matrix = [[5,1,9,11],[2,4,8,10],[13,3,6,7],[15,14,12,16]];
-console.log('rotate:', rotate(matrix));
+// console.log('rotate:', rotate(matrix));
 
 
+// 70. 搜索二维矩阵(leetcode 74)
+// 编写一个高效的算法来判断 m x n 矩阵中，是否存在一个目标值。该矩阵具有如下特性：
+// - 每行中的整数从左到右按升序排列。
+// - 每行的第一个整数大于前一行的最后一个整数。
+// 方法一：两次二分查找
+const searchMatrix = (matrix, target) => {
+    const binarySearchFirstColumn = (matrix, target) => {
+        let low = -1, high = matrix.length - 1;
+        while (low < high) {
+            const mid = Math.floor((high - low + 1) / 2) + low;
+            if(matrix[mid][0] <= target){
+                low = mid;
+            }else{
+                high = mid - 1;
+            }
+        }
+        return low;
+    }
 
+    const binarySearchRow = (row, target) => {
+        let low = 0, high = row.length - 1;
+        while(low <= high){
+            const mid = Math.floor((high - low) / 2) + low;
+            if(row[mid] === target){
+                return true;
+            }else if(row[mid] < target){
+                low = mid + 1;
+            }else{
+                high = mid - 1;
+            }
+        }
+        return false;
+    }
 
+    const rowIndex = binarySearchFirstColumn(matrix, target);
+    if(rowIndex < 0){
+        return false;
+    }
+    return binarySearchRow(matrix[rowIndex], target);
+}
 
+// 方法二：一次二分查找
 
+// const matrix = [[1,3,5,7],[10,11,16,20],[23,30,34,60]], target = 13;
+const matrix = [[1]], target = 1;
+console.log('searchMatrix:', searchMatrix(matrix, target));
 
 
 
