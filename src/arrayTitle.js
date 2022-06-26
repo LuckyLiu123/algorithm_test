@@ -2518,7 +2518,7 @@ const rotate = (matrix) => {
 // - 每行中的整数从左到右按升序排列。
 // - 每行的第一个整数大于前一行的最后一个整数。
 // 方法一：两次二分查找
-const searchMatrix = (matrix, target) => {
+const searchMatrix3 = (matrix, target) => {
     const binarySearchFirstColumn = (matrix, target) => {
         let low = -1, high = matrix.length - 1;
         while (low < high) {
@@ -2555,10 +2555,26 @@ const searchMatrix = (matrix, target) => {
 }
 
 // 方法二：一次二分查找
+const searchMatrix4 = (matrix, target) => {
+    const m = matrix.length, n = matrix[0].length;
+    let low = 0, high = m * n - 1;
+    while (low <= high) {
+        const mid = Math.floor((high - low) / 2) + low;
+        if(matrix[Math.floor(mid / n)][mid % n] === target) {
+            return true;
+        }else if(matrix[Math.floor(mid / n)][mid % n] < target){
+            low = mid + 1;
+        }else{
+            high = mid - 1;
+        }
+    }
+    return false;
+}
 
-// const matrix = [[1,3,5,7],[10,11,16,20],[23,30,34,60]], target = 13;
-const matrix = [[1]], target = 1;
-console.log('searchMatrix:', searchMatrix(matrix, target));
+const matrix = [[1,3,5,7],[10,11,16,20],[23,30,34,60]], target = 3;
+// const matrix = [[1]], target = 1;
+// const matrix = [[1,3]], target = 3;
+console.log('searchMatrix:', searchMatrix4(matrix, target));
 
 
 
