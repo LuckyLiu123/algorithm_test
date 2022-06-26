@@ -2571,15 +2571,30 @@ const searchMatrix4 = (matrix, target) => {
     return false;
 }
 
-const matrix = [[1,3,5,7],[10,11,16,20],[23,30,34,60]], target = 3;
+// const matrix = [[1,3,5,7],[10,11,16,20],[23,30,34,60]], target = 3;
 // const matrix = [[1]], target = 1;
 // const matrix = [[1,3]], target = 3;
-console.log('searchMatrix:', searchMatrix4(matrix, target));
+// console.log('searchMatrix:', searchMatrix4(matrix, target));
 
 
+// 72. 字母异位词分组(leetcode 49)
+// 给你一个字符串数组，请你将 字母异位词 组合在一起。可以按任意顺序返回结果列表。
+// 字母异位词 是由重新排列源单词的字母得到的一个新单词，所有源单词中的字母通常恰好只用一次。
+const groupAnagrams = (strs) => {
+    const map = new Map();
+    for(const str of strs){
+        let array = Array.from(str);
+        array.sort();
+        const key = array.toString();
+        const list = map.get(key) ? map.get(key) : [];
+        list.push(str);
+        map.set(key, list);
+    }
+    return Array.from(map.values());
+}
 
-
-
+const strs = ["eat", "tea", "tan", "ate", "nat", "bat"];
+console.log('groupAnagrams:', groupAnagrams(strs));
 
 
 
