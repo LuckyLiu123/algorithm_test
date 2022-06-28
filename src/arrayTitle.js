@@ -2652,14 +2652,39 @@ const spiralOrder2 = (matrix) => {
     return order;
 }
 
-const matrix = [[1,2,3],[4,5,6],[7,8,9]];
+// const matrix = [[1,2,3],[4,5,6],[7,8,9]];
 // const matrix = [[1,2,3,4],[5,6,7,8],[9,10,11,12]];
-console.log('spiralOrder:', spiralOrder2(matrix));
+// console.log('spiralOrder:', spiralOrder2(matrix));
 
 
+// 74. 不同路径(leetcode 62)
+// 一个机器人位于一个 m x n 网格的左上角 （起始点在下图中标记为 “Start” ）。
+// 机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角（在下图中标记为 “Finish” ）。
+// 问总共有多少条不同的路径？
+// 方法一：动态规划
+// 动态规划转移方程：f(i, j) = f(i−1, j) + f(i, j−1)
+const uniquePaths = (m, n) => {
+    const f = new Array(m).fill(0).map(() => new Array(n).fill(0));
+    f[0][0] = 1;
+    for(let i = 1; i < m; i++){
+        f[i][0] = 1;
+    }
+    for(let j = 1; j < n; j++){
+        f[0][j] = 1;
+    }
+    for(let i = 1; i < m; i++){
+        for(let j = 1; j < n; j++){
+            f[i][j] = f[i - 1][j] + f[i][j - 1];
+        }
+    }
+    return f[m - 1][n - 1];
+}
 
-
-
+// const m = 3, n = 7;
+// const m = 3, n = 2;
+// const m = 7, n = 3;
+const m = 3, n = 3;
+console.log('uniquePaths:', uniquePaths(m, n));
 
 
 
