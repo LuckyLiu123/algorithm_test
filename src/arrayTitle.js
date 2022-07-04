@@ -2708,14 +2708,33 @@ const grayCode = (n) => {
 }
 
 // const n = 2;
-const n = 1;
-console.log('grayCode:', grayCode(n));
+// const n = 1;
+// console.log('grayCode:', grayCode(n));
 
 
-
-
-
-
+// 76.最小绝对差(leetcode 1200)
+// 给你个整数数组 arr，其中每个元素都 不相同。
+// 请你找到所有具有最小绝对差的元素对，并且按升序的顺序返回。
+const minimumAbsDifference = (arr) => {
+    arr.sort((a, b) => a - b);
+    let res = Number.MAX_VALUE;
+    const ans = [];
+    for(let i = 1; i < arr.length; i++){
+        res = Math.min(res, arr[i] - arr[i - 1]);
+    }
+    let i = 1;
+    while(i < arr.length){
+        if(arr[i] - arr[i - 1] === res){
+            ans.push([arr[i - 1], arr[i]]);
+        }
+        i++;
+    }
+    return ans;
+}
+// const arr = [4,2,1,3];
+// const arr = [1,3,6,10,15];
+const arr = [3,8,-10,23,19,-4,-14,27];
+console.log('minimumAbsDifference:', minimumAbsDifference(arr));
 
 
 
