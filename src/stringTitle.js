@@ -288,13 +288,54 @@ const isDigit = (ch) => {
 }
 
 // const expression = "2-1-1";
-const expression = "2*3-4*5";
-console.log('diffWaysToCompute:', diffWaysToCompute(expression));
+// const expression = "2*3-4*5";
+// console.log('diffWaysToCompute:', diffWaysToCompute(expression));
 
+// 9. 单词替换(leetcode 648)
+/**
+ * 在英语中，我们有一个叫做 词根(root) 的概念，可以词根后面添加其他一些词组成另一个较长的单词——我们称这个词为 继承词(successor)。
+ * 例如，词根an，跟随着单词 other(其他)，可以形成新的单词 another(另一个)。
+ * 现在，给定一个由许多词根组成的词典 dictionary 和一个用空格分隔单词形成的句子 sentence。你需要将句子中的所有继承词用词根替换掉。
+ * 如果继承词有许多可以形成它的词根，则用最短的词根替换它。
+ * 你需要输出替换之后的句子。
+*/
+const replaceWords1 = (dictionary, sentence) => {
+    const arr = sentence.split(' ');
+    const senArr = sentence.split(' ');
+    for(let i = 0; i < arr.length; i++){
+        let res = Number.MAX_SAFE_INTEGER;
+        for(let j = 0; j < dictionary.length; j++){
+            let index = arr[i].indexOf(dictionary[j]);
+            if(index > -1 && index < res){
+                senArr[i] = dictionary[j];
+                res = index;
+            }
+        }
+    }
+    return senArr.join(' ');
+}
 
+const replaceWords2 = (dictionary, sentence) => {
+    const dictionarySet = new Set();
+    for(const root of dictionary){
+        dictionarySet.add(root);
+    }
+    const words = sentence.split(' ');
+    for(let i = 0; i < words.length; i++){
+        let word = words[i];
+        for(let j = 0; j < word.length; j++){
+            if(dictionarySet.has(word.substring(0, 1 + j))){
+                words[i] = word.substring(0, 1 + j);
+                break;
+            }
+        }
+    }
+    return words.join(' ');
+}
 
-
-
+// const dictionary = ["cat","bat","rat"], sentence = "the cattle was rattled by the battery";
+const dictionary = ["a","b","c"], sentence = "aadsfasf absbs bbab cadsfafs";
+console.log('replaceWords:', replaceWords2(dictionary, sentence));
 
 
 

@@ -2772,21 +2772,82 @@ const minimumAbsDifference = (arr) => {
 }
 // const arr = [4,2,1,3];
 // const arr = [1,3,6,10,15];
-const arr = [3,8,-10,23,19,-4,-14,27];
-console.log('minimumAbsDifference:', minimumAbsDifference(arr));
+// const arr = [3,8,-10,23,19,-4,-14,27];
+// console.log('minimumAbsDifference:', minimumAbsDifference(arr));
 
 
+// 77. 我的日程安排表 I(leetcode 729)
+/**
+ * 实现一个 MyCalendar 类来存放你的日程安排。如果要添加的日程安排不会造成 重复预订 ，则可以存储这个新的日程安排。、
+ * 当两个日程安排有一些时间上的交叉时（例如两个日程安排都在同一时间内），就会产生 重复预订 。
+ * 日程可以用一对整数 start 和 end 表示，这里的时间是半开区间，即 [start, end), 实数 x 的范围为，  start <= x < end 。
+ * 实现 MyCalendar 类：
+ * - MyCalendar() 初始化日历对象。
+ * - boolean book(int start, int end) 如果可以将日程安排成功添加到日历中而不会导致重复预订，返回 true 。
+ *   否则，返回 false 并且不要将该日程安排添加到日历中。
+*/
+const MyCalendar = function(){
+    this.booked = [];
+}
+
+MyCalendar.prototype.book = function(start, end) {
+   for(const arr of this.booked){
+       let l = arr[0], r = arr[1];
+       if(l < end && start < r){
+           return false;
+       }
+   }
+   this.booked.push([start, end]);
+   return true;
+}
+var obj = new MyCalendar()
+// const arr = [[10, 20], [15, 25], [20, 30]]
+// const arr = [[47,50],[33,41],[39,45],[33,42],[25,32],[26,35],[19,25],[3,8],[8,13],[18,27]]
+const arr = [[37,50],[33,50],[4,17],[35,48],[8,25]]
+const ans = [];
+for(let i = 0; i < arr.length; i++){
+    var param_1 = obj.book(arr[i][0], arr[i][1]);
+    ans.push(param_1);
+}
+// console.log('ans:', ans);
 
 
+// 78. 玩筹码(leetcode 1217)
+/**
+ * 有 n 个筹码。第 i 个筹码的位置是 position[i] 。
+ * 我们需要把所有筹码移到同一个位置。在一步中，我们可以将第 i 个筹码的位置从 position[i] 改变为:
+ * - position[i] + 2 或 position[i] - 2 ，此时 cost = 0
+ * - position[i] + 1 或 position[i] - 1 ，此时 cost = 1
+ * 返回将所有筹码移动到同一位置上所需要的 最小代价 。
+*/
+/**
+ * 思路：
+ * 首先很容易得出：
+ * 从某一个偶（奇）数位置 pi 改变到另一个偶（奇）数位置 pj，不妨设 pi < pj，那么一定 ∃k∈N∗ 使得 pi + 2k = pj 成立，即此时的最小开销为 0。
+ * 从某一个偶（奇）数位置 pi 改变到另一个奇（偶）数位置 pj，不妨设 pi < pj，那么一定 ∃k∈N 使得 pi + 2k + 1 = pj 成立，即此时的最小开销为 1。
+ * 那么我们可以把初始每一个偶数位置的「筹码」看作一个整体，每一个奇数位置的「筹码」看作一个整体。因为我们的目标是最后将
+ * 全部的「筹码」移动到同一个位置，那么最后的位置只有两种情况：
+ * - 移动到某一个偶数位置，此时的开销最小值就是初始奇数位置「筹码」的数量。
+ * - 移动到某一个奇数位置，此时的开销最小值就是初始偶数位置「筹码」的数量。
+ * - 那么这两种情况中的最小值就是最后将所有筹码移动到同一位置上所需要的最小代价。
+*/
+const minCostToMoveChips = (position) => {
+    let even = 0, odd = 0;
+    for(const num of position){
+        if(num % 2 === 1){
+            even++;
+        }else{
+            odd++;
+        }
+    }
+    return Math.min(even, odd);
+}
 
-
-
-
-
-
-
-
-
+const position = [1,2,3];
+// const position = [2,2,2,3,3];
+// const position = [1,1000000000];
+// const position = [6,4,7,8,2,10,2,7,9,7];
+console.log('minCostToMoveChips:', minCostToMoveChips(position));
 
 
 
