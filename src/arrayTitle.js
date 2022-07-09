@@ -2800,15 +2800,15 @@ MyCalendar.prototype.book = function(start, end) {
    this.booked.push([start, end]);
    return true;
 }
-var obj = new MyCalendar()
+// var obj = new MyCalendar()
 // const arr = [[10, 20], [15, 25], [20, 30]]
 // const arr = [[47,50],[33,41],[39,45],[33,42],[25,32],[26,35],[19,25],[3,8],[8,13],[18,27]]
-const arr = [[37,50],[33,50],[4,17],[35,48],[8,25]]
-const ans = [];
-for(let i = 0; i < arr.length; i++){
-    var param_1 = obj.book(arr[i][0], arr[i][1]);
-    ans.push(param_1);
-}
+// const arr = [[37,50],[33,50],[4,17],[35,48],[8,25]]
+// const ans = [];
+// for(let i = 0; i < arr.length; i++){
+//     var param_1 = obj.book(arr[i][0], arr[i][1]);
+//     ans.push(param_1);
+// }
 // console.log('ans:', ans);
 
 
@@ -2843,17 +2843,50 @@ const minCostToMoveChips = (position) => {
     return Math.min(even, odd);
 }
 
-const position = [1,2,3];
+// const position = [1,2,3];
 // const position = [2,2,2,3,3];
 // const position = [1,1000000000];
 // const position = [6,4,7,8,2,10,2,7,9,7];
-console.log('minCostToMoveChips:', minCostToMoveChips(position));
+// console.log('minCostToMoveChips:', minCostToMoveChips(position));
 
 
+// 78.最长的斐波那契子序列的长度(leetcode 873)
+/**
+ * 如果序列 X_1, X_2, ..., X_n 满足下列条件，就说它是 斐波那契式 的：
+ * - n >= 3
+ * - 对于所有 i + 2 <= n，都有 X_i + X_{i+1} = X_{i+2}
+ * 给定一个严格递增的正整数数组形成序列 arr ，找到 arr 中最长的斐波那契式的子序列的长度。如果一个不存在，返回  0 。
+ * （回想一下，子序列是从原序列 arr 中派生出来的，它从 arr 中删掉任意数量的元素（也可以不删），而不改变其余元素的顺序。
+ * 例如， [3, 5, 8] 是 [3, 4, 5, 6, 7, 8] 的一个子序列）
+*/
+// 方法一：动态规划
+const lenLongestFibSubseq = (arr) => {
+    const indices = new Map();
+    const n = arr.length;
+    for(let i = 0; i < n; i++){
+        indices.set(arr[i], i);
+    }
 
+    const dp = new Array(n).fill(0).map(() => new Array(n).fill(0));
+    let ans = 0;
+    for(let i = 0; i < n; i++){
+        for(let j = i - 1; j >= 0; j--){
+            if(arr[j] * 2 <= arr[i]){
+                break;
+            }
+            if(indices.has(arr[i] - arr[j])){
+                const k = indices.get(arr[i] - arr[j]);
+                dp[j][i] = Math.max(dp[k][j] + 1, 3);
+                ans = Math.max(ans, dp[j][i]);
+            }
+        }
+    }
+    return ans;
+}
 
-
-
+const arr = [1,2,3,4,5,6,7,8];
+// const arr = [1,3,7,11,12,14,18];
+console.log('lenLongestFibSubseq:', lenLongestFibSubseq(arr));
 
 
 
