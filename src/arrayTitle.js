@@ -2899,15 +2899,15 @@ const lenLongestFibSubseq = (arr) => {
  * - bool search(String searchWord) 给定一个字符串 searchWord ，判定能否只将字符串中 一个 字母换成另一个字母，
  *   使得所形成的新字符串能够与字典中的任一字符串匹配。如果可以，返回 true ；否则，返回 false 。
 */
-const MagicDictionary = () => {
+var MagicDictionary = function() {
     
 }
 
-MagicDictionary.prototype.buildDict = (dictionary) => {
+MagicDictionary.prototype.buildDict = function(dictionary) {
     this.words = dictionary;
 }
 
-MagicDictionary.prototype.search = (searchWord) => {
+MagicDictionary.prototype.search = function(searchWord) {
     for(const word of this.words){
         if(word.length !== searchWord.length){
             continue;
@@ -2928,14 +2928,71 @@ MagicDictionary.prototype.search = (searchWord) => {
     return false;
 }
 
-var obj = new MagicDictionary()
-obj.buildDict(dictionary)
-var param_2 = obj.search(searchWord)
+// var obj = new MagicDictionary()
+// obj.buildDict(dictionary)
+// var param_2 = obj.search(searchWord)
 
 
+// 80. 奇数值单元格的数目(leetcode 1252)
+/**
+ * 给你一个 m x n 的矩阵，最开始的时候，每个单元格中的值都是 0。
+ * 另有一个二维索引数组 indices，indices[i] = [ri, ci] 指向矩阵中的某个位置，其中 ri 和 ci 分别表示指定的行和列（从 0 开始编号）。
+ * 对 indices[i] 所指向的每个位置，应同时执行下述增量操作：
+ * - ri 行上的所有单元格，加 1 。
+ * - ci 列上的所有单元格，加 1 。
+ * 给你 m、n 和 indices 。请你在执行完所有 indices 指定的增量操作后，返回矩阵中 奇数值单元格 的数目。
+*/
+// 方法一：直接模拟
+const oddCells1 = (m, n, indices) => {
+    const arr = new Array(m).fill(0).map(() => new Array(n).fill(0));
 
+    for(let i = 0; i < indices.length; i++){
+        const indice = indices[i];
 
+        for(let j = 0; j < n; j++){
+            arr[indice[0]][j] += 1;
+        }
 
+        for(let k = 0; k < m; k++){
+            arr[k][indice[1]] += 1;
+        }
+    }
+
+    let res = 0;
+    for(let i = 0; i < m; i++){
+        for(let j = 0; j < n; j++){
+            if(arr[i][j] % 2 === 1){
+                res++;
+            }
+        }
+    }
+    return res;
+}
+
+// 方法二：模拟空间优化
+const oddCells2 = (m, n, indices) => {
+    const rows = new Array(m).fill(0);
+    const cols = new Array(n).fill(0);
+
+    for(const index of indices){
+        rows[index[0]]++;
+        cols[index[1]]++;
+    }
+
+    let res = 0;
+    for(let i = 0; i < m; i++){
+        for(let j = 0; j < n; j++){
+            if((rows[i] + cols[j]) % 2 === 1){
+                res++;
+            }
+        }
+    }
+    return res;
+}
+
+const m = 2, n = 3, indices = [[0,1],[1,1]];
+// const m = 2, n = 2, indices = [[1,1],[0,0]];
+console.log('oddCells:', oddCells2(m, n, indices));
 
 
 
