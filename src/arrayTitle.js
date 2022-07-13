@@ -2990,15 +2990,45 @@ const oddCells2 = (m, n, indices) => {
     return res;
 }
 
-const m = 2, n = 3, indices = [[0,1],[1,1]];
+// const m = 2, n = 3, indices = [[0,1],[1,1]];
 // const m = 2, n = 2, indices = [[1,1],[0,0]];
-console.log('oddCells:', oddCells2(m, n, indices));
+// console.log('oddCells:', oddCells2(m, n, indices));
 
 
+// 81. 行星碰撞(leetcode 735)
+/**
+ * 给定一个整数数组 asteroids，表示在同一行的行星。
+ * 对于数组中的每一个元素，其绝对值表示行星的大小，正负表示行星的移动方向（正表示向右移动，负表示向左移动）。每一颗行星以相同的速度移动。
+ * 找出碰撞后剩下的所有行星。碰撞规则：两个行星相互碰撞，较小的行星会爆炸。如果两颗行星大小相同，
+ * 则两颗行星都会爆炸。两颗移动方向相同的行星，永远不会发生碰撞。
+*/
+const asteroidCollision = (asteroids) => {
+    const stack = [];
+    for(const aster of asteroids){
+        let alive = true;
+        while(alive && aster < 0 && stack.length > 0 && stack[stack.length - 1] > 0){
+            alive = stack[stack.length - 1] < -aster;
+            if(stack[stack.length - 1] <= -aster){
+                stack.pop();
+            }
+        }
+        if(alive){
+            stack.push(aster);
+        }
+    }
+    const size = stack.length;
+    const ans = new Array(size).fill(0);
+    for(let i = size - 1; i >= 0; i--){
+        ans[i] = stack.pop();
+    }
+    return ans;
+}
 
-
-
-
+// const asteroids = [5,10,-5];
+// const asteroids = [8,-8];
+// const asteroids = [10,2,-5];
+const asteroids = [-10,-2,5];
+console.log('asteroidCollision:', asteroidCollision(asteroids));
 
 
 
