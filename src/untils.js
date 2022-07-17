@@ -43,6 +43,16 @@ function TreeNode (val, left, right) {
     this.right = (right === undefined ? null : right);
 }
 
+// 四叉树
+function QTreeNode (val,isLeaf,topLeft,topRight,bottomLeft,bottomRight){
+    this.val = val;
+    this.isLeaf = isLeaf;
+    this.topLeft = topLeft;
+    this.topRight = topRight;
+    this.bottomLeft = bottomLeft;
+    this.bottomRight = bottomRight;
+}
+
 
 
 export {
@@ -50,5 +60,6 @@ export {
     createList,
     getListLength,
     reverseLinkedList,
-    TreeNode
+    TreeNode,
+    QTreeNode
 }

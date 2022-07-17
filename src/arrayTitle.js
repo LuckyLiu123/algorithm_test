@@ -2888,7 +2888,6 @@ const lenLongestFibSubseq = (arr) => {
 // const arr = [1,3,7,11,12,14,18];
 // console.log('lenLongestFibSubseq:', lenLongestFibSubseq(arr));
 
-
 // 79.摘樱桃(leetcode 741)
 /**
  * 一个N x N的网格(grid) 代表了一块樱桃地，每个格子由以下三种数字的一种来表示：
@@ -2934,28 +2933,179 @@ const cherryPickup = (grid) => {
     return Math.max(f[n-1][n-1], 0);
 }
 
-const grid = [[0, 1, -1], [1, 0, -1], [1, 1,  1]];
-console.log('cherryPickup:', cherryPickup(grid));
+// const grid = [[0, 1, -1], [1, 0, -1], [1, 1,  1]];
+// console.log('cherryPickup:', cherryPickup(grid));
+
+// 79.实现一个魔法字典(leetcode 676)
+/**
+ * 设计一个使用单词列表进行初始化的数据结构，单词列表中的单词 互不相同 。 如果给出一个单词，
+ * 请判定能否只将这个单词中一个字母换成另一个字母，使得所形成的新单词存在于你构建的字典中。
+ * 实现 MagicDictionary 类：
+ * - MagicDictionary() 初始化对象
+ * - void buildDict(String[] dictionary) 使用字符串数组 dictionary 设定该数据结构，dictionary 中的字符串互不相同
+ * - bool search(String searchWord) 给定一个字符串 searchWord ，判定能否只将字符串中 一个 字母换成另一个字母，
+ *   使得所形成的新字符串能够与字典中的任一字符串匹配。如果可以，返回 true ；否则，返回 false 。
+*/
+var MagicDictionary = function() {
+    
+}
+
+MagicDictionary.prototype.buildDict = function(dictionary) {
+    this.words = dictionary;
+}
+
+MagicDictionary.prototype.search = function(searchWord) {
+    for(const word of this.words){
+        if(word.length !== searchWord.length){
+            continue;
+        }
+        let diff = 0;
+        for(let i = 0; i < word.length; i++){
+            if(word[i] !== searchWord[i]){
+                diff++;
+                if(diff > 1){
+                    break;
+                }
+            }
+        }
+        if(diff === 1){
+            return true;
+        }
+    }
+    return false;
+}
+
+// var obj = new MagicDictionary()
+// obj.buildDict(dictionary)
+// var param_2 = obj.search(searchWord)
 
 
+// 80. 奇数值单元格的数目(leetcode 1252)
+/**
+ * 给你一个 m x n 的矩阵，最开始的时候，每个单元格中的值都是 0。
+ * 另有一个二维索引数组 indices，indices[i] = [ri, ci] 指向矩阵中的某个位置，其中 ri 和 ci 分别表示指定的行和列（从 0 开始编号）。
+ * 对 indices[i] 所指向的每个位置，应同时执行下述增量操作：
+ * - ri 行上的所有单元格，加 1 。
+ * - ci 列上的所有单元格，加 1 。
+ * 给你 m、n 和 indices 。请你在执行完所有 indices 指定的增量操作后，返回矩阵中 奇数值单元格 的数目。
+*/
+// 方法一：直接模拟
+const oddCells1 = (m, n, indices) => {
+    const arr = new Array(m).fill(0).map(() => new Array(n).fill(0));
+
+    for(let i = 0; i < indices.length; i++){
+        const indice = indices[i];
+
+        for(let j = 0; j < n; j++){
+            arr[indice[0]][j] += 1;
+        }
+
+        for(let k = 0; k < m; k++){
+            arr[k][indice[1]] += 1;
+        }
+    }
+
+    let res = 0;
+    for(let i = 0; i < m; i++){
+        for(let j = 0; j < n; j++){
+            if(arr[i][j] % 2 === 1){
+                res++;
+            }
+        }
+    }
+    return res;
+}
+
+// 方法二：模拟空间优化
+const oddCells2 = (m, n, indices) => {
+    const rows = new Array(m).fill(0);
+    const cols = new Array(n).fill(0);
+
+    for(const index of indices){
+        rows[index[0]]++;
+        cols[index[1]]++;
+    }
+
+    let res = 0;
+    for(let i = 0; i < m; i++){
+        for(let j = 0; j < n; j++){
+            if((rows[i] + cols[j]) % 2 === 1){
+                res++;
+            }
+        }
+    }
+    return res;
+}
+
+// const m = 2, n = 3, indices = [[0,1],[1,1]];
+// const m = 2, n = 2, indices = [[1,1],[0,0]];
+// console.log('oddCells:', oddCells2(m, n, indices));
 
 
+// 81. 行星碰撞(leetcode 735)
+/**
+ * 给定一个整数数组 asteroids，表示在同一行的行星。
+ * 对于数组中的每一个元素，其绝对值表示行星的大小，正负表示行星的移动方向（正表示向右移动，负表示向左移动）。每一颗行星以相同的速度移动。
+ * 找出碰撞后剩下的所有行星。碰撞规则：两个行星相互碰撞，较小的行星会爆炸。如果两颗行星大小相同，
+ * 则两颗行星都会爆炸。两颗移动方向相同的行星，永远不会发生碰撞。
+*/
+const asteroidCollision = (asteroids) => {
+    const stack = [];
+    for(const aster of asteroids){
+        let alive = true;
+        while(alive && aster < 0 && stack.length > 0 && stack[stack.length - 1] > 0){
+            alive = stack[stack.length - 1] < -aster;
+            if(stack[stack.length - 1] <= -aster){
+                stack.pop();
+            }
+        }
+        if(alive){
+            stack.push(aster);
+        }
+    }
+    const size = stack.length;
+    const ans = new Array(size).fill(0);
+    for(let i = size - 1; i >= 0; i--){
+        ans[i] = stack.pop();
+    }
+    return ans;
+}
+
+// const asteroids = [5,10,-5];
+// const asteroids = [8,-8];
+// const asteroids = [10,2,-5];
+// const asteroids = [-10,-2,5]; 
+// console.log('asteroidCollision:', asteroidCollision(asteroids));
 
 
+// 82. 前缀和后缀搜索(leetcode 745)
+/**
+ * 设计一个包含一些单词的特殊词典，并能够通过前缀和后缀来检索单词。
+ * 实现 WordFilter 类：
+ * - WordFilter(string[] words) 使用词典中的单词 words 初始化对象。
+ * f(string pref, string suff) 返回词典中具有前缀 prefix 和后缀 suff 的单词的下标。
+ * 如果存在不止一个满足要求的下标，返回其中 最大的下标 。如果不存在这样的单词，返回 -1 。
+*/
+// 方法一：计算每个单词的前缀后缀组合可能性
+const WordFilter = function(words) {
+    this.dictionary = new Map();
+    for(let i = 0; i < words.length; i++){
+        const word = words[i];
+        const m = word.length;
+        for(let prefixLen = 1; prefixLen <= m; prefixLen++){
+            for(let suffLen = 1; suffLen <= m; suffLen++){
+                this.dictionary.set(word.substring(0, prefixLen) + '#' + word.substring(m - suffLen) , i);
+            }
+        }
+    }
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+WordFilter.prototype.f = function(pref, suff){
+    if(this.dictionary.has(pref + '#' + suff)){
+        return this.dictionary.get(pref + '#' + suff);
+    }
+    return -1;
+}
 
 
 
