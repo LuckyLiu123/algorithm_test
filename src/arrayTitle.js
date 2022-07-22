@@ -3306,6 +3306,7 @@ MyCalendarTwo.prototype.book = function (start, end) {
 // const param_6 = obj.book(25, 55)
 // console.log('param:', param_1, param_2, param_3, param_4, param_5, param_6);
 
+
 // 86. 二维网格迁移(leetcode 1260)
 /**
  * 给你一个 m 行 n 列的二维网格 grid 和一个整数 k。你需要将 grid 迁移 k 次。
@@ -3330,10 +3331,58 @@ const shiftGrid = (grid, k) => {
 
 // const grid = [[1,2,3],[4,5,6],[7,8,9]], k = 1;
 // const grid = [[3,8,1,9],[19,7,2,5],[4,6,11,10],[12,0,21,13]], k = 4;
-const grid = [
-    [1, 2, 3],
-    [4, 5, 6],
-    [7, 8, 9],
-  ],
-  k = 9;
-console.log("shiftGrid:", shiftGrid(grid, k));
+// const grid = [
+//     [1, 2, 3],
+//     [4, 5, 6],
+//     [7, 8, 9],
+//   ],
+//   k = 9;
+// console.log("shiftGrid:", shiftGrid(grid, k));
+
+
+// 87. 设置交集大小至少为2(leetcode 757)
+/**
+ * 一个整数区间 [a, b]  ( a < b ) 代表着从 a 到 b 的所有连续整数，包括 a 和 b。
+ * 给你一组整数区间intervals，请找到一个最小的集合 S，使得 S 里的元素与区间intervals中的每一个整数区间都至少有2个元素相交。
+ * 输出这个最小集合S的大小。
+*/
+// 方法一：贪心
+const intersectionSizeTwo = (intervals) => {
+  const n = intervals.length;
+  let res = 0;
+  const m = 2;
+  intervals.sort((a, b) => {
+    if(a[0] === b[0]){
+      return b[1] - a[1];
+    }
+    return a[0] - b[0];
+  })
+
+  const temp = new Array(n).fill(0);
+  for(let i = 0; i < n; i++){
+    temp[i] = [];
+  }
+
+  const help = (intervals, temp, pos, num) => {
+    for(let i = pos; i >= 0; i--){
+      if(intervals[i][1] < num){
+        break;
+      }
+      temp[i].push(num);
+    }
+  }
+  
+  for(let i = n - 1; i >= 0; i--){
+    for(let j = intervals[i][0], k = temp[i].length; k < m; k++, j++){
+      res++;
+      help(intervals, temp, i - 1, j);
+    }
+  }
+  return res;
+}
+
+
+
+const intervals = [[1, 3], [1, 4], [2, 5], [3, 5]];
+// const intervals = [[1, 2], [2, 3], [2, 4], [4, 5]];
+console.log('intersectionSizeTwo:', intersectionSizeTwo(intervals));
