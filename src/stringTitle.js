@@ -333,6 +333,105 @@ const replaceWords2 = (dictionary, sentence) => {
 };
 
 // const dictionary = ["cat","bat","rat"], sentence = "the cattle was rattled by the battery";
-const dictionary = ["a", "b", "c"],
-  sentence = "aadsfasf absbs bbab cadsfafs";
-console.log("replaceWords:", replaceWords2(dictionary, sentence));
+// const dictionary = ["a", "b", "c"],
+//   sentence = "aadsfasf absbs bbab cadsfafs";
+// console.log("replaceWords:", replaceWords2(dictionary, sentence));
+
+
+// 10. 分数加减运算(leetcode 592)
+/**
+ * 给定一个表示分数加减运算的字符串 expression ，你需要返回一个字符串形式的计算结果。 
+ * 这个结果应该是不可约分的分数，即最简分数。 如果最终结果是一个整数，例如 2，你需要将它转换成分数形式，
+ * 其分母为 1。所以在上述例子中, 2 应该被转换为 2/1。
+*/
+const fractionAddition = (expression) => {
+  let denominator = 0, numerator = 1;
+  let index = 0, n = expression.length;
+  while(index < n){
+    let denominator1 = 0, sign = 1;
+    if(expression[index] === '-' || expression[index] === '+'){
+      sign = expression[index] === '-' ? -1 : 1;
+      index++;
+    }
+    while(index < n && isDigit(expression[index])){
+      denominator1 = denominator1 * 10 + expression[index].charCodeAt() - '0'.charCodeAt();
+      index++;
+    }
+    denominator1 = denominator1 * sign;
+    index++;
+
+    let numerator1 = 0;
+    while(index < n && isDigit(expression[index])){
+      numerator1 = numerator1 * 10 + expression[index].charCodeAt() - '0'.charCodeAt();
+      index++;
+    }
+
+    denominator = denominator * numerator1 + denominator1 * numerator;
+    numerator = numerator * numerator1;
+  }
+
+  if(denominator === 0){
+    return '0/1';
+  }
+  const g = gcb(Math.abs(denominator), numerator);  // 获取最大公约数
+  return Math.floor(denominator / g) + '/' + Math.floor(numerator / g);
+}
+
+const gcb = (a, b) => {
+  let remainder = a % b;
+  while(remainder !== 0){
+    a = b;
+    b = remainder;
+    remainder = a % b;
+  }
+  return b;
+}
+
+// const expression = "-1/2+1/2";
+// const expression = "-1/2+1/2+1/3";
+const expression = "1/3-1/2";
+console.log('fractionAddition:', fractionAddition(expression));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
