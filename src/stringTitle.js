@@ -287,8 +287,8 @@ const isDigit = (ch) => {
 };
 
 // const expression = "2-1-1";
-// const expression = "2*3-4*5";
-// console.log('diffWaysToCompute:', diffWaysToCompute(expression));
+const expression = "2*3-4*5";
+console.log('diffWaysToCompute:', diffWaysToCompute(expression));
 
 // 9. 单词替换(leetcode 648)
 /**
@@ -389,8 +389,8 @@ const gcb = (a, b) => {
 
 // const expression = "-1/2+1/2";
 // const expression = "-1/2+1/2+1/3";
-const expression = "1/3-1/2";
-console.log('fractionAddition:', fractionAddition(expression));
+// const expression = "1/3-1/2";
+// console.log('fractionAddition:', fractionAddition(expression));
 
 
 
