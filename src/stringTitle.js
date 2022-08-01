@@ -508,12 +508,22 @@ const isLowerCase = (ch) => {
 
 // const expression = "(let x 2 (mult x (let x 3 y 4 (add x y))))";
 // const expression = "(let x 3 x 2 x)";
-const expression = "(let x 1 y 2 x (add x y) (add x y))";
-console.log('evaluate:', evaluate(expression));
+// const expression = "(let x 1 y 2 x (add x y) (add x y))";
+// console.log('evaluate:', evaluate(expression));
 
 
-
-
+// 12. 生成每种字符都是奇数个的字符串(leetcode 1374)
+/**
+ * 给你一个整数 n，请你返回一个含 n 个字符的字符串，其中每种字符在该字符串中都恰好出现 奇数次 。
+ * 返回的字符串必须只含小写英文字母。如果存在多个满足题目要求的字符串，则返回其中任意一个即可。
+*/
+const generateTheString = (n) => {
+  const str = '';
+  if(n % 2 === 1){
+    return str + 'a'.repeat(n);
+  }
+  return str + 'a'.repeat(n - 1) + 'b';
+}
 
 
 
