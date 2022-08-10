@@ -581,14 +581,53 @@ const makeLargestSpecial = (s) => {
   return subs.join('');
 }
 
-const S = "11011000";
-console.log('makeLargestSpecial:', makeLargestSpecial(s));
+// const S = "11011000";
+// console.log('makeLargestSpecial:', makeLargestSpecial(s));
 
 
+// 15. 求解方程(leetcode 640)
+/**
+ * 求解一个给定的方程，将x以字符串 "x=#value" 的形式返回。该方程仅包含 '+' ， '-' 操作，变量 x 和其对应系数。
+ * 如果方程没有解，请返回 "No solution" 。如果方程有无限解，则返回 “Infinite solutions” 。
+ * 题目保证，如果方程中只有一个解，则 'x' 的值是一个整数。
+*/
+const solveEquation = (equation) => {
+  let factor = 0, val = 0;
+  let index = 0, n = equation.length, sign1 = 1;  // 等式左边默认系数为正
+  while(index < n){
+    if(equation[index] === '='){
+      sign1 = -1;  // 等式右边默认系数为负
+      index++;
+      continue;
+    }
 
+    let sign2 = sign1, number = 0;
+    let valid = false;  // 记录 number 是否有效
+    if(equation[index] === '-' || equation[index] === '+'){
+      sign2 = (equation[index] === '-') ? -sign1 : sign1;
+      index++;
+    }
+    while(index < n && isDigit(equation[index])){
+      number = number * 10 + (equation[index].charCodeAt() - '0'.charCodeAt());
+      index++;
+      valid = true;
+    }
+    if(index < n && equation[index] === 'x'){
+      factor += valid ? sign2 * number : sign2;
+      index++;
+    }else{
+      val += sign2 * number;
+    }
+  }
 
+  if(factor === 0){
+    return val === 0 ? "Infinite solutions" : "No solution";
+  }
+  return "x=" + (-val/factor);
+}
 
-
+const equation = "x+5-3+x=6+x-2";
+console.log('solveEquation:', solveEquation(equation));
 
 
 
