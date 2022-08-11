@@ -626,14 +626,46 @@ const solveEquation = (equation) => {
   return "x=" + (-val/factor);
 }
 
-const equation = "x+5-3+x=6+x-2";
-console.log('solveEquation:', solveEquation(equation));
+// const equation = "x+5-3+x=6+x-2";
+// console.log('solveEquation:', solveEquation(equation));
 
 
+// 16. 重新格式化字符串(leetcode 1417)
+/**
+ * 给你一个混合了数字和字母的字符串 s，其中的字母均为小写英文字母。
+ * 请你将该字符串重新格式化，使得任意两个相邻字符的类型都不同。也就是说，字母后面应该跟着数字，而数字后面应该跟着字母。
+ * 请你返回 重新格式化后 的字符串；如果无法按要求重新格式化，则返回一个 空字符串 。
+*/
+const reformat = (s) => {
+  let sumDigit = 0;
+  for(let i = 0; i < s.length; i++){
+    const c = s[i];
+    if(isDigit(c)){
+      sumDigit++;
+    }
+  }
+  let sumAlpha = s.length - sumDigit;
+  if(Math.abs(sumDigit - sumAlpha) > 1){
+    return '';
+  }
+  let flag = sumDigit > sumAlpha;
+  const arr = [...s];
+  for(let i = 0, j = 1; i < s.length; i += 2){
+    if(isDigit(arr[i]) !== flag){
+      while(isDigit(arr[j]) !== flag){
+        j += 2;
+      }
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+  }
+  return arr.join('');
+}
 
-
-
-
+// const s = "a0b1c2";
+// const s = "leetcode";
+// const s = "covid2019";
+const s = "ab123";
+console.log('reformat:', reformat(s));
 
 
 
