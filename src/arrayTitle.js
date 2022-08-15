@@ -3937,15 +3937,88 @@ const groupThePeople = (groupSizes) => {
 }
 
 // const groupSizes = [3,3,3,3,3,1,3];
-const groupSizes = [2,1,3,3,3,2];
-console.log('groupThePeople:', groupThePeople(groupSizes));
+// const groupSizes = [2,1,3,3,3,2];
+// console.log('groupThePeople:', groupThePeople(groupSizes));
 
 
+// 99. 设计循环双端队列(leetcode 641)
+/**
+ * 设计实现双端队列。
+ * 实现 MyCircularDeque 类:
+ * - MyCircularDeque(int k) ：构造函数,双端队列最大为 k 。
+ * - boolean insertFront()：将一个元素添加到双端队列头部。 如果操作成功返回 true ，否则返回 false 。
+ * - boolean insertLast() ：将一个元素添加到双端队列尾部。如果操作成功返回 true ，否则返回 false 。
+ * - boolean deleteFront() ：从双端队列头部删除一个元素。 如果操作成功返回 true ，否则返回 false 。
+ * - boolean deleteLast() ：从双端队列尾部删除一个元素。如果操作成功返回 true ，否则返回 false 。
+ * - int getFront() )：从双端队列头部获得一个元素。如果双端队列为空，返回 -1 。
+ * - int getRear() ：获得双端队列的最后一个元素。 如果双端队列为空，返回 -1 。
+ * - boolean isEmpty() ：若双端队列为空，则返回 true ，否则返回 false  。
+ * - boolean isFull() ：若双端队列满了，则返回 true ，否则返回 false 。
+*/
+const MyCircularDeque = (k) => {
+  this.queue = [];
+  this.maxLen = k;
+}
 
+MyCircularDeque.prototype.insertFront = function(value){
+  if(this.isFull()){
+    return false;
+  }
+  this.queue.unshift(value);
+  return true;
+}
 
+MyCircularDeque.prototype.insertLast = function(value){
+  if(this.isFull()){
+    return false;
+  }
+  this.queue.push(value);
+  return true;
+}
 
+MyCircularDeque.prototype.deleteFront = function(){
+  if(this.isEmpty()){
+    return false;
+  }
+  this.queue.shift();
+  return true;
+}
 
+MyCircularDeque.prototype.deleteLast = function(){
+  if(this.isEmpty()){
+    return false;
+  }
+  this.queue.pop();
+  return true;
+}
 
+MyCircularDeque.prototype.getFront = function(){
+  if(this.isEmpty()){
+    return -1;
+  }
+  return this.queue[0];
+}
+
+MyCircularDeque.prototype.getRear = function(){
+  if(this.isEmpty()){
+    return -1;
+  }
+  return this.queue[this.queue.length - 1];
+}
+
+MyCircularDeque.prototype.isEmpty = function(){
+  if(this.queue.length === 0){
+    return true;
+  }
+  return false;
+}
+
+MyCircularDeque.prototype.isFull = function(){
+  if(this.queue.length === this.maxLen){
+    return true;
+  }
+  return false;
+}
 
 
 
