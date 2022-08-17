@@ -3956,15 +3956,17 @@ const groupThePeople = (groupSizes) => {
  * - boolean isFull() ：若双端队列满了，则返回 true ，否则返回 false 。
 */
 const MyCircularDeque = (k) => {
-  this.queue = [];
-  this.maxLen = k;
+  this.capacity = k + 1;
+  this.rear = this.front = 0;
+  this.elements = new Array(k + 1).fill(0);
 }
 
 MyCircularDeque.prototype.insertFront = function(value){
   if(this.isFull()){
     return false;
   }
-  this.queue.unshift(value);
+  this.front = (this.front - 1 + this.capacity) % this.capacity;
+  this.elements[this.front] = value;
   return true;
 }
 
@@ -3972,7 +3974,8 @@ MyCircularDeque.prototype.insertLast = function(value){
   if(this.isFull()){
     return false;
   }
-  this.queue.push(value);
+  this.elements[this.rear] = value;
+  this.rear = (this.rear + 1) % this.capacity;
   return true;
 }
 
@@ -3980,7 +3983,7 @@ MyCircularDeque.prototype.deleteFront = function(){
   if(this.isEmpty()){
     return false;
   }
-  this.queue.shift();
+  this.front = (this.front + 1) % this.capacity;
   return true;
 }
 
@@ -3988,7 +3991,7 @@ MyCircularDeque.prototype.deleteLast = function(){
   if(this.isEmpty()){
     return false;
   }
-  this.queue.pop();
+  this.rear = (this.rear - 1 + this.capacity) % this.capacity;
   return true;
 }
 
@@ -3996,28 +3999,22 @@ MyCircularDeque.prototype.getFront = function(){
   if(this.isEmpty()){
     return -1;
   }
-  return this.queue[0];
+  return this.elements[this.front];
 }
 
 MyCircularDeque.prototype.getRear = function(){
   if(this.isEmpty()){
     return -1;
   }
-  return this.queue[this.queue.length - 1];
+  return this.elements[(this.rear - 1 + this.capacity) % this.capacity];
 }
 
 MyCircularDeque.prototype.isEmpty = function(){
-  if(this.queue.length === 0){
-    return true;
-  }
-  return false;
+  return this.rear === this.front;
 }
 
 MyCircularDeque.prototype.isFull = function(){
-  if(this.queue.length === this.maxLen){
-    return true;
-  }
-  return false;
+  return (this.rear + 1) % capacity === this.front;
 }
 
 

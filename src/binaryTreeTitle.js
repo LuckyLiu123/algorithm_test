@@ -402,9 +402,50 @@ const addOneRow2 = (root, val, depth) => {
 }
 
 
+// 12. 层数最深叶子节点的和(leetcode 1302)
+// 给你一棵二叉树的根节点 root ，请你返回 层数最深的叶子节点的和 。
+// 方法一：深度优先搜索
+const deepestLeavesSum1 = (root) => {
+  let maxLevel = -1;
+  let sum = 0;
+  const dfs = (node, level) => {
+    if(!node){
+      return;
+    }
+    if(level > maxLevel){
+      maxLevel = level;
+      sum = node.val;
+    }else if(level === maxLevel){
+      sum += node.val;
+    }
+    dfs(node.left, level + 1);
+    dfs(node.right, level + 1);
+  }
+  dfs(root, 0);
+  return sum;
+}
 
-
-
+// 方法二：广度优先搜索
+const deepestLeavesSum2 = (root) => {
+  const queue = [];
+  let sum = 0;
+  queue.push(root);
+  while(queue.length){
+    sum = 0;
+    const size = queue.length;
+    for(let i = 0; i < size; i++){
+      const node = queue.shift();
+      sum += node.val;
+      if(node.left){
+        queue.push(node.left);
+      }
+      if(node.right){
+        queue.push(node.right);
+      }
+    }
+  }
+  return sum;
+}
 
 
 
