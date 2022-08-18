@@ -3955,7 +3955,7 @@ const groupThePeople = (groupSizes) => {
  * - boolean isEmpty() ：若双端队列为空，则返回 true ，否则返回 false  。
  * - boolean isFull() ：若双端队列满了，则返回 true ，否则返回 false 。
 */
-const MyCircularDeque = (k) => {
+const MyCircularDeque = function(k) {
   this.capacity = k + 1;
   this.rear = this.front = 0;
   this.elements = new Array(k + 1).fill(0);
@@ -4018,11 +4018,41 @@ MyCircularDeque.prototype.isFull = function(){
 }
 
 
+// 100. 最大相等频率(leetcode 1224)
+/**
+ * 给你一个正整数数组 nums，请你帮忙从该数组中找出能满足下面要求的 最长 前缀，并返回该前缀的长度：
+ * - 从前缀中 恰好删除一个 元素后，剩下每个数字的出现次数都相同。
+ * 如果删除这个元素后没有剩余元素存在，仍可认为每个数字都具有相同的出现次数（也就是 0 次）。
+*/
+const maxEqualFreq = (nums) => {
+  const freq = new Map();
+  const count = new Map();
+  let res = 0, maxFreq = 0;
+  for(let i = 0; i < nums.length; i++){
+    if(!count.has(nums[i])){
+      count.set(nums[i], 0);
+    }
+    if(count.get(nums[i]) > 0){
+      freq.set(count.get(nums[i]), freq.get(count.get(nums[i])) - 1);
+    }
+    count.set(nums[i], count.get(nums[i]) + 1);
+    maxFreq = Math.max(maxFreq, count.get(nums[i]));
+    if(!freq.has(count.get(nums[i]))){
+      freq.set(count.get(nums[i]), 0);
+    }
+    freq.set(count.get(nums[i]), freq.get(count.get(nums[i])) + 1);
+    const ok = maxFreq === 1 || freq.get(maxFreq) * maxFreq + freq.get(maxFreq - 1) * (maxFreq - 1) === i + 1 && freq.get(maxFreq) === 1 || 
+              freq.get(maxFreq) * maxFreq + 1 === i + 1 && freq.get(1) === 1;
+    if(ok){
+      res = Math.max(res, i + 1);
+    }
+  }
+  return res;
+}
 
-
-
-
-
+// const nums = [2,2,1,1,5,3,3,5];
+const nums = [1,1,1,2,2,2,3,3,3,4,4,4,5];
+console.log('maxEqualFreq:', maxEqualFreq(nums));
 
 
 
