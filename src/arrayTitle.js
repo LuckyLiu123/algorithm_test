@@ -4051,14 +4051,34 @@ const maxEqualFreq = (nums) => {
 }
 
 // const nums = [2,2,1,1,5,3,3,5];
-const nums = [1,1,1,2,2,2,3,3,3,4,4,4,5];
-console.log('maxEqualFreq:', maxEqualFreq(nums));
+// const nums = [1,1,1,2,2,2,3,3,3,4,4,4,5];
+// console.log('maxEqualFreq:', maxEqualFreq(nums));
 
 
+// 101. 在既定时间做作业的学生人数(leetcode 1450)
+/**
+ * 给你两个整数数组 startTime（开始时间）和 endTime（结束时间），并指定一个整数 queryTime 作为查询时间。
+ * 已知，第 i 名学生在 startTime[i] 时开始写作业并于 endTime[i] 时完成作业。
+ * 请返回在查询时间 queryTime 时正在做作业的学生人数。形式上，返回能够使 queryTime 处于
+ * 区间 [startTime[i], endTime[i]]（含）的学生人数。
+*/
+const busyStudent = (startTime, endTime, queryTime) => {
+  let res = 0;
+  const len = startTime.length;
+  for(let i = 0; i < len; i++){
+    if(queryTime >= startTime[i] && queryTime <= endTime[i]){
+      res++;
+    }
+  }
+  return res;
+}
 
-
-
-
+// const startTime = [1,2,3], endTime = [3,2,7], queryTime = 4;
+// const startTime = [4], endTime = [4], queryTime = 4;
+// const startTime = [4], endTime = [4], queryTime = 5;
+// const startTime = [1,1,1,1], endTime = [1,3,2,4], queryTime = 7;
+const startTime = [9,8,7,6,5,4,3,2,1], endTime = [10,10,10,10,10,10,10,10,10], queryTime = 5;
+console.log('busyStudent:', busyStudent(startTime, endTime, queryTime));
 
 
 
